@@ -9,4 +9,5 @@ if (!$conn) {
 
 define ('ROOT_PATH', realpath(dirname(__FILE__))); //this defines the root path as the current directory folder of the running script
 define('BASE_URL', 'http://localhost/seektest/');
+
 ?>

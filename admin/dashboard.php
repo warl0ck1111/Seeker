@@ -7,7 +7,7 @@ include('../config.php'); ?>
 <?php include(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
 
 <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
-<?php include(ROOT_PATH . '/admin/reports.php'); ?>
+
 
 <title>Admin | Dashboard</title>
 </head>
@@ -45,10 +45,10 @@ include('../config.php'); ?>
 				<span><?php echo count(getSeekers()) ?></span> <br>
 				<span>Registered seekers</span>
 			</a>
-			<a href="posts.php">
+			<a href="reports.php">
 				<span>
-					<?php if (getAllReports() != null) {
-						echo count(getAllReports());
+					<?php if (getReports() != null) {
+						echo count(getReports());
 					} else {
 						echo "0";
 					} ?>

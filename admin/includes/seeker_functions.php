@@ -447,3 +447,29 @@ function getSuspendedUsers()
 		}
 	}
 }
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+* - Returns all Reported seeker  and their corresponding roles
+same fuction as getAllReports() in reports_functions
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+function getReports(){
+    global $errors;
+	if (in_array($_SESSION['user']['role'], ['admin'])) {
+		global $conn, $roles, $keyword;
+		$sql = "SELECT * FROM reportedusers WHERE U_name or  rptr_u_name  or reason like '%$keyword%' "; 
+		if($result = mysqli_query($conn, $sql)){
+            $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+            return $users;
+        }else{
+            array_push($errors, "there was a problem fetching Records");
+        }
+
+	} else {
+		return null;
+	}
+}
+
+ 
