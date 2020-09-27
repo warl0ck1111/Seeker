@@ -8,6 +8,7 @@
 			<a href="<?php echo BASE_URL . 'admin/users.php' ?>">Manage Admin</a>
 			<a href="<?php echo BASE_URL . 'admin/seekers.php' ?>">Manage Seekers</a>
 			<a href="<?php echo BASE_URL . 'admin/reports.php' ?>">Manage Reported Seekers</a>
+			<a href="<?php echo BASE_URL . 'admin/suspended.php' ?>">Manage Suspended Seekers</a>
 		</div>
 	</div>
 </div>

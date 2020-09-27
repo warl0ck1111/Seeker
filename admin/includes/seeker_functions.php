@@ -14,6 +14,7 @@ $preference = "";
 $phone = "";
 $role = "";
 $email = "";
+$fgt_pwd ="";
 // general variables
 $errors = [];
 $isSeeker = false;
@@ -61,17 +62,17 @@ if (isset($_GET['unsuspend-seeker'])) {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 * - UnSuspends seeker
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function UnSuspendSeeker($id){
-    if (in_array($_SESSION['user']['role'], ['admin'])) {
-        global $conn , $errors;
-        $sql = "update users set suspended='false' where user_id =$id";
-        if($result = mysqli_query($conn, $sql)){
-            $_SESSION['message'] = "User UnSuspended";
-
-        }else{
-            array_push($errors, "there was an error");
-        }
-    }
+function UnSuspendSeeker($id)
+{
+	if (in_array($_SESSION['user']['role'], ['admin'])) {
+		global $conn, $errors;
+		$sql = "update users set suspended='false' where user_id =$id";
+		if ($result = mysqli_query($conn, $sql)) {
+			$_SESSION['message'] = "User UnSuspended";
+		} else {
+			array_push($errors, "there was an error");
+		}
+	}
 }
 
 
@@ -157,7 +158,7 @@ function createSeeker($request_values)
 		$password = esc($request_values['password']);
 		$passwordConfirmation = esc($request_values['passwordConfirmation']);
 
-		if(! is_integer($phone)) array_push($errors, "Invalid Charated entered for phone");
+		if (!is_integer($phone)) array_push($errors, "Invalid Charated entered for phone");
 		switch ($request_values['gender']) {
 			case ("Male"):
 				$gender = 'm';
@@ -262,9 +263,13 @@ function createSeeker($request_values)
 		}
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
+			$fgt_pwd = $password;
+
 			$password = md5($password); //encrypt the password before saving in the database
-			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, state, pwd, age, gender,preference, created_at) 
-				  VALUES('$username','$fname','$lname','$phone', '$email', '$role','$state', '$password', '$age', '$gender', '$preference',  now())";
+			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, state, pwd,
+			 forgot_pwd_code age, gender,preference, created_at) 
+				  VALUES('$username','$fname','$lname','$phone', '$email', '$role','$state', '$password',
+				   '$fgt_pwd', '$age', '$gender', '$preference',  now())";
 			$result = mysqli_query($conn, $query);
 
 			if ($result) {
@@ -287,7 +292,7 @@ function createSeeker($request_values)
 function editSeeker($seeker_id)
 {
 	global $conn, $errors, $username, $role, $isEditingUser, $state, $seeker_id, $email,
-	 $age, $gender, $preference, $fname, $lname, $phone;
+		$age, $gender, $preference, $fname, $lname, $phone, $fgt_pwd;
 
 	$sql = "SELECT * FROM users WHERE user_id=$seeker_id LIMIT 1";
 	$result = mysqli_query($conn, $sql);
@@ -301,11 +306,11 @@ function editSeeker($seeker_id)
 
 	$state = $seeker['state'];
 	$preference = $seeker['preference'];
+	$fgt_pwd = $seeker['forgot_pwd_code'];
 
 
 
 
-	
 	$phone = $seeker['phone'];
 	$fname = $seeker['f_name'];
 	$lname = $seeker['l_name'];
@@ -392,7 +397,7 @@ function deleteSeeker($seeker_id)
 	$res = mysqli_query($conn, $query);
 	// $uName = mysqli_fetch_all($res, MYSQLI_ASSOC);
 	$uName = getUsername($seeker_id)['u_name'];
-array_push($errors, $uName);
+	array_push($errors, $uName);
 	$sql = "DELETE FROM users WHERE user_id=$seeker_id";
 
 	if (mysqli_query($conn, $sql)) {
@@ -454,22 +459,35 @@ function getSuspendedUsers()
 * - Returns all Reported seeker  and their corresponding roles
 same fuction as getAllReports() in reports_functions
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function getReports(){
-    global $errors;
+function getReports()
+{
+	global $errors;
 	if (in_array($_SESSION['user']['role'], ['admin'])) {
 		global $conn, $roles, $keyword;
-		$sql = "SELECT * FROM reportedusers WHERE U_name or  rptr_u_name  or reason like '%$keyword%' "; 
-		if($result = mysqli_query($conn, $sql)){
-            $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		$sql = "SELECT * FROM reportedusers WHERE U_name or  rptr_u_name  or reason like '%$keyword%' ";
+		if ($result = mysqli_query($conn, $sql)) {
+			$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-            return $users;
-        }else{
-            array_push($errors, "there was a problem fetching Records");
-        }
-
+			return $users;
+		} else {
+			array_push($errors, "there was a problem fetching Records");
+		}
 	} else {
 		return null;
 	}
 }
 
- 
+function getSuspendedSeekers()
+{
+	if (in_array($_SESSION['user']['role'], ['admin'])) {
+		global $keyword, $conn, $roles;
+
+		$sql = "SELECT * FROM users WHERE role = 'seeker' AND suspended = 'true'"; //WHERE role IS NOT NULL
+		$result = mysqli_query($conn, $sql);
+		$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+		return $users;
+	} else {
+		return null;
+	}
+}

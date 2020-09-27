@@ -7,7 +7,7 @@ if($_SESSION['user']['suspended'] === 'true') {
 ?>
 
 <?php if (isset($_SESSION['message'])) : ?>
-      <div class="message" >
+      <div class="smessage" >
       	<p>
           <?php 
           	echo $_SESSION['message']; 

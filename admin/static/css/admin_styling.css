@@ -132,7 +132,7 @@ th { text-align: center;}
 .container.content .action.create-post-div { width: 80%; }
 /* Table div (Displaying records from DB) */
 .table-div { float: left; width: 47%; }
-.table-div .message { width: 90%; margin-top: 20px; }
+.table-div .smessage { width: 90%; margin-top: 20px; }
 .table-div table { width: 90%; }
 .table-div a.fa { color: white; padding: 3px; }
 .table-div .edit { background: #004220; }
@@ -142,7 +142,7 @@ th { text-align: center;}
 /* * * * * * * * * *
 * VALIDATION ERRORS
 * * * * * * * * * */
-.message {
+.smessage {
 	width: 100%; 
 	margin: 0px auto; 
 	padding: 10px 0px; 

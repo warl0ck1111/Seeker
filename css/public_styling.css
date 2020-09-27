@@ -329,7 +329,7 @@ form input:focus {
 
 
 /* NOTIFICATION MESSAGES */
-.message {
+.smessage {
 	width: 100%; 
 	margin: 0px auto; 
 	padding: 10px 0px; 

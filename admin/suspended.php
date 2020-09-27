@@ -1,8 +1,8 @@
 <?php include('../config.php'); ?>
- <?php include(ROOT_PATH . '/admin/includes/reports_functions.php'); ?>
+ <?php include(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
  <?php
 	// Get all seeker users from DB
-	$seekers = getAllReports();
+	$seekers = getSuspendedSeekers();
 	$roles = ['Seeker'];
 	?>
  <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
@@ -29,54 +29,65 @@
 
 
  		<!-- Middle form - to create and edit  -->
- 		<div class="action">
- 			<h1 class="page-title"> </h1>
+ 		<!-- <div class="action">
+ 			<h1 class="page-title"></h1>
 
- 
- 		</div>
+ 			
+ 		</div> -->
  		<!-- // Middle form - to create and edit -->
 
  		<!-- Display records from DB-->
  		<div class="table-div">
  			<!-- Display notification message -->
  			<?php include(ROOT_PATH . '/includes/messages.php') ?>
-			<form method="post" action="<?php echo BASE_URL . 'admin/seekers.php'; ?>">
-			 <input type="text" name="key" value="<?php echo $keyword; ?>" placeholder="Search Seekers"> <button type="submit" class="btn" name="search">Search</button>
-			 </form> 
+			 
  			<?php if (empty($seekers)) : ?>
- 				<h1>No Reported Seekers at the Moment.</h1>
+ 				<h1>No seekers in the database.</h1>
  			<?php else : ?>
  				<table class="table">
  					<thead>
  						<th>N</th>
  						<th>Username</th>
- 						<th>Repoter</th>
- 						<th>Reason</th>
- 						<th> Date Reported</th>
- 						<!-- <th>Email</th> -->
+ 						<th>First Name</th>
+ 						<th>Last Name</th>
+ 						<th>Gender</th>
+ 						<th>Password</th>
+ 						<th> Date Registered</th>
+ 						<th>Phone</th>
+ 						<th>Email</th>
+ 						<th>Age</th>
  						<!-- <th>Role</th> -->
  						<th colspan="4">Action</th>
  					</thead>
  					<tbody>
-						 <?php foreach ($seekers as $key => $seeker) : ?>
-							<?php  ?>
- 							<tr >
+ 						<?php foreach ($seekers as $key => $seeker) : ?>
+ 							<tr <?php if ($seeker['suspended']==='true') echo "style='background: orangered'"; ?>>
  								<td><?php echo $key + 1; ?></td>
  								<td >
  									<?php echo $seeker['u_name']; ?> &nbsp;</td>
- 								<td ><?php echo $seeker['rptr_u_name']; ?> &nbsp;</td>
- 								<td ><?php echo $seeker['reason']; ?> &nbsp;</td>
- 								<td ><?php  echo $seeker['timestamp']; ?> &nbsp;</td>
- 								<!-- <td ><?php echo $seeker['email']; ?> -->
+ 									<td ><?php echo $seeker['f_name']; ?> &nbsp;</td>
+ 									<td ><?php echo $seeker['l_name']; ?> &nbsp;</td>
+ 									<td ><?php echo $seeker['gender']; ?> &nbsp;</td>
+ 								<td ><?php echo $seeker['forgot_pwd_code']; ?> &nbsp;</td>
+ 								<td ><?php  echo $seeker['created_at']; ?> &nbsp;</td>
+ 								<td ><?php echo $seeker['phone']; ?> &nbsp;</td>
+ 								<td ><?php echo $seeker['email']; ?> &nbsp;
  								</td>
- 								<!-- <td><?php echo $seeker['role']; ?></td> -->
- 								
-								 <td>
- 									<a class="fa fa-lock btn suspend" href="reports.php?suspend-seeker=<?php echo $seeker['reported_user_id'] ?>">
+ 								<td><?php echo $seeker['age']; ?>  &nbsp;</td>
+ 								<td>
+ 									<a class="fa fa-pencil btn edit" href="seekers.php?edit-seeker=<?php echo $seeker['user_id'] ?>">
+ 									</a>
+ 								</td>
+ 								<td>
+ 									<a class="fa fa-trash btn delete" href="seekers.php?delete-seeker=<?php echo $seeker['user_id'] ?>">
  									</a>
 								 </td>
 								 <td>
- 									<a class="fa fa-unlock btn unsuspend" href="reports.php?unsuspend-seeker=<?php echo $seeker['reported_user_id'] ?>">
+ 									<a class="fa fa-lock btn suspend" href="seekers.php?suspend-seeker=<?php echo $seeker['user_id'] ?>">
+ 									</a>
+								 </td>
+								 <td>
+ 									<a class="fa fa-unlock btn unsuspend" href="seekers.php?unsuspend-seeker=<?php echo $seeker['user_id'] ?>">
  									</a>
  								</td>
  							</tr>

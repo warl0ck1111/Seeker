@@ -213,7 +213,7 @@ div .menu a{
 }
 
 /* NOTIFICATION MESSAGES */
-.message {
+.smessage {
 	width: 100%; 
 	margin: 0px auto; 
 	padding: 10px 0px; 
@@ -237,7 +237,7 @@ div .menu a{
 	text-align: right; 
 	padding: 10px;
 }
-
+/* 
 @media screen and (max-width: 750px){
 	.side {
 		display: none ;
@@ -267,4 +267,4 @@ div .menu a{
 		left: 20px;
 	}
 }
-
+ */

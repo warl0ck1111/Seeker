@@ -146,7 +146,7 @@ p {
 
 
 /* NOTIFICATION MESSAGES */
-.message {
+.smessage {
 	width: 100%; 
 	margin: 0px auto; 
 	padding: 10px 0px; 
@@ -196,7 +196,7 @@ p {
 .social-icon {
   margin: 20px 10px;
 }
-
+/* 
 @media (max-width: 1028px) {
 
   #title {
@@ -207,4 +207,4 @@ p {
     position: static;
     transform: rotate(0);
   }
-}
+} */

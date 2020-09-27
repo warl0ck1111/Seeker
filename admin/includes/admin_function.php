@@ -184,9 +184,10 @@ function createAdmin($request_values)
 		}
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
+			$fgt_pwd = $password;
 			$password = md5($password); //encrypt the password before saving in the database
-			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, pwd, created_at) 
-				  VALUES('$username','$fname','$lname','$phone', '$email', '$role', '$password', now())";
+			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, pwd, forgot_pwd_code created_at) 
+				  VALUES('$username','$fname','$lname','$phone', '$email', '$role', '$password', '$fgt_pwd', now())";
 			$result = mysqli_query($conn, $query);
 
 			if ($result) {

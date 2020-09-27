@@ -211,7 +211,7 @@ div .menu a{
 	text-decoration: none;
 	 
 }
-
+/* 
 @media screen and (max-width: 750px){
 	.side {
 		display: none ;
@@ -240,10 +240,10 @@ div .menu a{
 		bottom: 40px;
 		left: 20px;
 	}
-}
+} */
 
 /* NOTIFICATION MESSAGES */
-.message {
+.smessage {
 	width: 100%; 
 	margin: 0px auto; 
 	padding: 10px 0px; 

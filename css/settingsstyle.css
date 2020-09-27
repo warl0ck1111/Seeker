@@ -167,7 +167,7 @@ body {
 }
 
 /* NOTIFICATION MESSAGES */
-.message {
+.smessage {
 	width: 100%; 
 	margin: 0px auto; 
 	padding: 10px 0px; 
@@ -191,7 +191,7 @@ body {
 	text-align: right; 
 	padding: 10px;
 }
-
+/* 
 @media screen and (max-width: 750px){
 	.content{
 		display: none;
@@ -224,7 +224,7 @@ body {
 		bottom: 40px;
 		left: 20px;
 	} */
-}
+/* } */
 /********************* extra*******************************/
 .side .cont {
 	padding: 10px 20px;

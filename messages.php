@@ -1,3 +1,7 @@
+<?php
+include('config.php');
+
+include("like.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,12 +18,7 @@
 <body>
 	<div class="container">
 		<div class="side">
-
 			<?php
-			include('config.php');
-
-			include("like.php");
-
 			global $people;
 			$clickCount = 1;
 			$errors = array();
@@ -30,13 +29,12 @@
 				$uid = $details['user_id'];
 				$pref = $details['preference'];
 				$sql = '';
-
 			} else {
 				die("You must Be <a href=login.php>Logged in </a>First</div></body></html>");
 			}
 
 
-			
+
 			?>
 
 			<a href="settings.php">
@@ -53,7 +51,7 @@
 
 		<div class="menu">
 			<ul>
-				<li ><a href="people.php">People</a></li>
+				<li><a href="people.php">People</a></li>
 				<li class="active"><a href="messages.php">Messages</a></li>
 			</ul>
 

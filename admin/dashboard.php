@@ -7,8 +7,7 @@ include('../config.php'); ?>
 <?php include(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
 
 <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
-
-
+ 
 <title>Admin | Dashboard</title>
 </head>
 
@@ -39,8 +38,8 @@ include('../config.php'); ?>
 		<?php include(ROOT_PATH . '/includes/errors.php') ?>
 
 
-		<div class="stats">
-			<a href="seekers.php" class="first">
+		<div class="stats" >
+			<a href="seekers.php" class="first" style='color:green'>
 
 				<span><?php echo count(getSeekers()) ?></span> <br>
 				<span>Registered seekers</span>
@@ -53,9 +52,9 @@ include('../config.php'); ?>
 						echo "0";
 					} ?>
 				</span> <br>
-				<span>Reported Users</span>
+				<span>Reported Seekers</span>
 			</a>
-			<a href="#" style='color:red'>
+			<a href="suspended.php" style='color:red'>
 				<span> <?php if (getSuspendedUsers() != null) {
 							echo count(getSuspendedUsers());
 						} else {

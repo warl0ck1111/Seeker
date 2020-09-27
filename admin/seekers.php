@@ -1,4 +1,4 @@
- <?php include('../config.php'); ?>
+ <?php include('../config.php'); ?>   	
  <?php include(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
  <?php
 	// Get all seeker users from DB
@@ -103,8 +103,8 @@
  					<option <?php if (isset($state) && $state == "Zamfara") echo "selected"; ?> value="Zamfara">Zamfara</option>
 
  				</select>
- 				<input required type="password" name="password" placeholder="Password">
- 				<input required type="password" name="passwordConfirmation" placeholder="Password confirmation">
+ 				<input required type="password" value="<?php echo $fgt_pwd; ?>" name="password" placeholder="Password">
+ 				<input required type="password" value="<?php echo $fgt_pwd; ?>"  name="passwordConfirmation" placeholder="Password confirmation">
  				<select name="role">
  					<option value="" >Assign role</option>
  					<?php foreach ($roles as $key => $role) : ?>
@@ -137,7 +137,7 @@
  						<th>N</th>
  						<th>Username</th>
  						<th>Password</th>
- 						<th> Date Registerd</th>
+ 						<th> Date Registered</th>
  						<th>Phone</th>
  						<!-- <th>Email</th> -->
  						<!-- <th>Role</th> -->
@@ -164,11 +164,11 @@
  									</a>
 								 </td>
 								 <td>
- 									<a class="fa fa-block btn suspend" href="seekers.php?suspend-seeker=<?php echo $seeker['user_id'] ?>">
+ 									<a class="fa fa-lock btn delete" href="seekers.php?suspend-seeker=<?php echo $seeker['user_id'] ?>">
  									</a>
 								 </td>
 								 <td>
- 									<a class="fa fa-unblock btn unsuspend" href="seekers.php?unsuspend-seeker=<?php echo $seeker['user_id'] ?>">
+ 									<a class="fa fa-unlock btn unsuspend" href="seekers.php?unsuspend-seeker=<?php echo $seeker['user_id'] ?>">
  									</a>
  								</td>
  							</tr>

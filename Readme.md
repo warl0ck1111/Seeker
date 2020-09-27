@@ -10,3 +10,6 @@ Create Admin Account
 View and Edit Admin Account
 update Admin Account
 Delete Admin Account
+
+Passwords automatically fills in when edit button clicked for admin sections
+TODO:Click Name to View user Profiles
