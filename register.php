@@ -5,6 +5,7 @@
 <!-- <?php include('includes/head_section.php'); ?> -->
 
 <title>Courtship Seeker | Sign up </title>
+<link rel="stylesheet" href="css/public_styling.css">
 </head>
 <body>
 <body>

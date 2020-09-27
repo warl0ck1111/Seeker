@@ -13,7 +13,7 @@ body {
 
 
 /* HEADINGS DEFAULT */
-h1, h2, h3, h4, h5, h6 { color: #444; font-family: 'Averia Serif Libre', cursive; }
+h1, h2, h3, h4, h5, h6 { color: #006384; font-family: 'Averia Serif Libre', cursive; }
 a { text-decoration: none; }
 ul, ol { margin-left: 40px; }
 hr { margin: 10px 0px; opacity: .25; }
@@ -25,7 +25,7 @@ form h2 {
 	text-align: center;
 	font-family: 'Averia Serif Libre', cursive;
 }
-form input {
+form input, form select {
 	width: 100%;
 	display: block;
 	padding: 13px 13px;
@@ -34,7 +34,7 @@ form input {
 	border-radius: 3px;
 	box-sizing : border-box;
 	background: transparent;
-	border: 1px solid #3E606F;
+	border: 1px solid #3bbced;
 }
 form input:focus {
 	outline: none;
@@ -44,7 +44,7 @@ form input:focus {
 /* BUTTON DEFAULT */
 .btn {
 	color: white;
-	background: #4E6166;
+	background:#3bbced;
 	text-align: center;
 	border: none;
 	border-radius: 5px;

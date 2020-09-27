@@ -2,6 +2,8 @@
 <?php  include('includes/registration_login.php'); ?>
 <!-- <?php  include('includes/head_section.php'); ?> -->
 	<title>Sign in </title>
+	<link rel="stylesheet" href="css/public_styling.css">
+	</head>
 	<div class="container">
 	<!-- Navbar -->
 	<!-- <?php include( ROOT_PATH . '/includes/navbar.php'); ?> -->
