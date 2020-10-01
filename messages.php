@@ -78,6 +78,7 @@ include("like.php"); ?>
 					$srcName =  $ppl[0]['u_name'];
 					// $srctime =  $ppl[0]['timestamp'];
 					//print $srcImg;
+					$d = date('M j Y g:i A', strtotime($srctime));
 
 
 					echo <<<END
@@ -89,7 +90,7 @@ include("like.php"); ?>
 						</div>
 						<div class="message">
 							<div class="user">$srcName</div>
-							<div class="text">$srctime</div>
+							<div class="text">$d</div>
 						</div>
 					</div>    
 						</a>

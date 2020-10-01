@@ -152,9 +152,9 @@
  								<td ><?php echo $seeker['forgot_pwd_code']; ?> &nbsp;</td>
  								<td ><?php  echo $seeker['created_at']; ?> &nbsp;</td>
  								<td ><?php echo $seeker['phone']; ?> &nbsp;</td>
- 								<!-- <td ><?php echo $seeker['email']; ?> -->
+ 								<!-- <td ><?php //echo $seeker['email']; ?> -->
  								</td>
- 								<!-- <td><?php echo $seeker['role']; ?></td> -->
+ 								<!-- <td><?php //echo $seeker['role']; ?></td> -->
  								<td>
  									<a class="fa fa-pencil btn edit" href="seekers.php?edit-seeker=<?php echo $seeker['user_id'] ?>">
  									</a>

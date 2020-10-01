@@ -245,3 +245,26 @@ function setImg($profile_image = array(), $username)
 	}
 	return $res;
 }
+
+
+// delete   user 
+function deleteUser($admin_id)
+{
+	global $conn, $errors;
+	$query = "Select * from users where user_id=$admin_id";
+	if ($res = mysqli_query($conn, $query)) {
+		$uname = mysqli_fetch_all($res, MYSQLI_ASSOC);
+	} else {
+		array_push($errors, "Error fetching user details");
+	}
+
+	$sql = "DELETE FROM users WHERE user_id=$admin_id";
+
+	if (mysqli_query($conn, $sql)) {
+		$_SESSION['message'] = $uname['u_name'] . " successfully deleted";
+		header("location: index.php");
+		exit(0);
+	} else {
+		array_push($errors, "Error:" . $conn->error);
+	}
+}

@@ -100,7 +100,7 @@
 							</td>
 							<td>
 								<a class="fa fa-trash btn delete" 
-								    href="users.php?delete-admin=<?php echo $admin['user_id'] ?>">
+								    <?php echo 'href="users.php?delete-admin='.$admin['user_id'] ?>>
 								</a>
 							</td>
 						</tr>
@@ -111,7 +111,6 @@
 		</div>
 		<!-- // Display records from DB -->
 	</div>
-
 
 	
 </body>

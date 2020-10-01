@@ -6,17 +6,41 @@ $errors = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $email = "";
-    if (empty($_POST["username"])) {
-        array_push($errors, "Name is required");
-    } else {
-        $username = esc($_POST["username"]);
-    }
 
-    if (empty($_POST["email"])) {
-        array_push($errors, "Email is required");
-    } else {
-        $email = esc($_POST["email"]);
+    switch ($_POST){
+        case empty($_POST["username"]) && empty($_POST["email"]):
+        array_push($errors, "Username & Email field can not be empty ");
+        break;
+
+    
+        case empty($_POST["username"]):
+            array_push($errors, "Username is required");
+        break;
+
+        case empty($_POST["email"]):
+            array_push($errors, "Email is required");
+        break;
+
     }
+    $username = esc($_POST["username"]);
+    $email = esc($_POST["email"]);
+
+
+    // if (empty($_POST["username"]) && empty($_POST["email"])) {
+    //     array_push($errors, "Name Email is required");
+    // }
+
+    // if (empty($_POST["username"])) {
+    //     array_push($errors, "Name is required");
+    // } else {
+    //     $username = esc($_POST["username"]);
+    // }
+
+    // if (empty($_POST["email"])) {
+    //     array_push($errors, "Email is required");
+    // } else {
+    //     $email = esc($_POST["email"]);
+    // }
 
     if (count($errors) == 0) {
         //check if users exists and details correct
@@ -65,11 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="jquery.js"></script>
 <link rel="stylesheet" href="css/public_styling.css">
 
+
+<!-- TODO: style button -->
 </head>
 
 <body>
 <div style="width: 40%; margin: 20px auto;">
-<h2>Forgot Password</h2>
+<h2>Forgot Password</h2> 
     <form id="frm_check" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <?php
 
@@ -79,8 +105,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <input id="email" type="text" name="email" placeholder="email">
 
-        <input id="submit" type="submit" name="submit" value="check">
+        <input id="submit" type="submit" name="submit" value="Get Password">
     </form>
+    <a class="fa fa-lock btn suspend" href="login.php">Back</a>
 
 </div>
 </body>

@@ -69,11 +69,12 @@ switch($details['gender']){
             text-decoration: none;
 
         }
+        
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container"  >
         <div class="side">
 
             <a href="settings.php">
@@ -115,10 +116,10 @@ switch($details['gender']){
                 <div class=".edit"><span></span>Edit Account</span></div>
             </a>
         </div>
-        <div class="cont"><a href="deleteAcc.php">
-                <div class=".delete"><span></span>Delete Account</span></div>
+        <div class="cont"><a href="deleteAcc.php"> 
+                <div class=".delete"><span></span><?php echo "<td><a onClick=\"javascript: return confirm('Please confirm deletion');\" href='delete.php?id=".$details['user_id']."'>Delete Account</a></td><tr>"; ?>
+</span></div>
             </a></div>
-
     </div>
 
 

@@ -204,14 +204,15 @@ if ($num_of_people == 0) {
 			$sql = "SELECT * from users where user_id = '$POS'";
 			$result = mysqli_query($conn, $sql);
 			if ($result) {
-
+//TODO: ITHINK THIS CODE PRINTS OUT ONLY ONE USER...NEEDS LOOP(OR FALSE ALARM)
 				$ppl = mysqli_fetch_all($result, MYSQLI_ASSOC);
 				//  print_r($ppl);
 				$srcImg = $ppl[0]['profile_image'];
 				$srcName =  $ppl[0]['u_name'];
 				// $srctime =  $ppl[0]['timestamp'];
 				//print $srcImg;
-
+				$d = date('M j Y g:i A', strtotime($srctime));
+				
 
 				echo <<<END
 				</hr>
@@ -222,7 +223,7 @@ if ($num_of_people == 0) {
 						</div>
 						<div class="message">
 							<div class="user">$srcName</div>
-							<div class="text">$srctime</div>
+							<div class="text">$d</div>
 						</div>
 					</div>    
 						</a>
