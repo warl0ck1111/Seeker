@@ -63,9 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
     <script src="jquery.js"></script>
+<link rel="stylesheet" href="css/public_styling.css">
+
 </head>
 
 <body>
+<div style="width: 40%; margin: 20px auto;">
+<h2>Forgot Password</h2>
     <form id="frm_check" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <?php
 
@@ -78,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input id="submit" type="submit" name="submit" value="check">
     </form>
 
-
+</div>
 </body>
 
 </html>

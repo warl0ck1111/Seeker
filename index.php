@@ -41,8 +41,8 @@
 				</button>
 
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-				
-					 
+
+
 
 				</div>
 			</nav>
@@ -55,16 +55,20 @@
 				<div class="col-lg-6">
 					<h1 class="big-heading">Meet your Life Partner on Seeker</h1>
 					<form action="index.php" method="post">
-				<h2>Login</h2>
-				<?php include(ROOT_PATH . '/includes/errors.php') ?>
-				<input type="text" name="username" placeholder="Username">
-				<input type="password" name="password" placeholder="Password">
-				<button class="btn" type="submit" name="login_btn">Sign in</button>
-			</form>
+						<h2>Login</h2>
+						<?php include(ROOT_PATH . '/includes/errors.php') ?>
+						<input type="text" name="username" placeholder="Username">
+						<input type="password" name="password" placeholder="Password">
+
+						<div > <button class="btn btn-lg btn-block btn-outline-dark" style="width: 100px; display:block; margin-top:20px" type="submit" name="login_btn">Sign in</button>
+
+							<a style="color: purple; margin-left:20px" href="register.php"><button class="btn btn-lg btn-block btn-outline-dark" style="width: 100px; text-decoration:none" class="btn" type="submit" name="login_btn">Join us</button></a>
+						</div>
+					</form>
 				</div>
 
-				<div class="col-lg-6">
-					<img class="title-image" src="images/dating-img.jpg" alt="iphone-mockup">
+				<div class="col-md-3">
+
 				</div>
 
 			</div>
@@ -113,19 +117,19 @@
 			<div class="carousel-inner">
 				<div class="carousel-item active container-fluid">
 					<h2 class="testimonial-text">I no longer have to flirt for hours to know about someone's interest.I've found the hottest girl on Courtship Seeker.</h2>
-					<img class="testimonial-image" src="images/jorde.jpg" alt="dog-profile">
-					<em>Pebbles, New York</em>
+					<!-- <img class="testimonial-image" src="images/jorde.jpg" alt="dog-profile">
+					<em>Pebbles, New York</em> -->
 				</div>
-				
+
 			</div>
-			 
+
 		</div>
 
 	</section>
 
 
 	<!-- Press -->
-<!-- 
+	<!-- 
 	<section class="colored-section" id="press">
 		<img class="press-logo" src="images/techcrunch.png" alt="tc-logo">
 		<img class="press-logo" src="images/tnw.png" alt="tnw-logo">
@@ -151,17 +155,17 @@
 					</div>
 					<div class="card-body">
 						<h2 class="price-text">FREE</h2>
-						
+
 						<p>Unlimited Matches</p>
 						<p>Unlimited Messages</p>
 						<p>Unlimited App Usage</p>
-						<button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button>
+						<a style="color: purple; margin-left:20px" href="register.php"><button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button></a>
 					</div>
 				</div>
 			</div>
- 
 
-			 
+
+
 
 
 
@@ -177,7 +181,7 @@
 		<div class="container-fluid">
 
 			<h3 class="big-heading">Find the True Love of Your Life Today.</h3>
-			
+
 		</div>
 	</section>
 
@@ -198,6 +202,3 @@
 </body>
 
 </html>
-
-
-

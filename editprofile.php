@@ -13,6 +13,8 @@ include_once("includes/editUserProfile.php");
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
     <link rel="stylesheet" href="css/settingsstyle.css">
+<link rel="stylesheet" href="css/public_styling.css">
+
     <style>
         .cont span {
             padding-right: 30px;

@@ -89,7 +89,7 @@
 					// $diff1 = array_diff($r21,$r31);
 					// $diff2 = array_diff($r31,$r21);
 					// $merge = array_merge($diff1,$diff2);
-					// // print_r($r11);
+					// like// print_r($r11);
 
 
 
@@ -352,6 +352,12 @@ if ($num_of_people == 0) {
 				var url = "http://userinfo.php";
 				window.location(url);
 			})
+
+			$(document).ready(function(){
+            if($("#userInfoView").length  ){
+            alert("The element you're testing is present.");
+        }
+        });
 		</script>
 
 	<?php

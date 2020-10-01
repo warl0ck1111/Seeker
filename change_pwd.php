@@ -15,6 +15,8 @@ $errors = array();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change password</title>
+<link rel="stylesheet" href="css/public_styling.css">
+
 </head>
 
 <body>
@@ -85,13 +87,15 @@ function escs(String $value)
 
     ?>
     
+    <div style="width: 40%; margin: 20px auto;">
+    <h2>Change password</h2>
     <form action="change_pwd.php" method="POST">
         <?php include( 'includes/errors.php') ?>
-    <div class="cont"><span>Old Password</span> <input required placeholder="enter Old Password" type=password name="oldpwd"></div>
-    <div class="cont"><span>Password</span> <input required placeholder="new password" type=password name="newpwd"></div>
-    <div class="cont"><span>Confirm Password</span> <input required placeholder="confirm New Password" type=password name="confpwd"></div>
-<input type="submit" name="submit" value="change Password">
-    </form>
+    <div class="cont"><span></span> <input required placeholder="enter Old Password" type=password name="oldpwd"></div>
+    <div class="cont"><span> </span> <input required placeholder="new password" type=password name="newpwd"></div>
+    <div class="cont"><span></span> <input required placeholder="confirm New Password" type=password name="confpwd"></div>
+    <button type="submit" class="btn"  name="submit" value="change Password">Change Password</button>
+    </form></div>
 </body>
 
 </html>

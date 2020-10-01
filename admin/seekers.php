@@ -178,7 +178,10 @@
  			<?php endif ?>
  		</div>
  		<!-- // Display records from DB -->
- 	</div>
+	 </div>
+	 
+
+	 
  </body>
 
  </html>

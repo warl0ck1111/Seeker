@@ -75,7 +75,8 @@ function reportUser($id, $reason)
     <?php include(ROOT_PATH . '/includes/messages.php') ?>
     <?php include(ROOT_PATH . '/includes/errors.php') ?>
 
-    <div>
+    <div style="width: 40%; margin: 20px auto;">
+    <h2>Report user</h2>
         <form method="post" action="<?php echo BASE_URL . '/reportuser.php'; ?>">
             <input type="text" name="reason" placeholder="Reason"> <button type="submit" class="btn" name="report">Report</button>
         </form>

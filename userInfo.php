@@ -129,79 +129,34 @@
             <div id="unlike" class="no">
                 <i class="fas fa-times"></i>
             </div>
-            <div class="star" id="info">
+            <!-- <div class="star" id="info">
                 <i class="fas fa-info fa"></i>
-            </div>
-            <div id="like" class="heart">
+            </div> -->
+            <!-- <div id="like" class="heart">
                 <i class="fas fa-heart"></i>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script>
         //CURRENT_ARR_POS = parseInt( )
+    
+    $('#unlike').click(function() {
+                    $.post('unlike.php', {
+                        uid: <?php echo $details['user_id'] ?>,
+                        unliked_uid: <?php  $person['user_id']  ?>
+                    }, function(data) {
 
+                        console.log("data  : " + data)
+                        var url = " people.php";
+                window.location.href = url;
+                    
+                //   $('#ulmsg').html(data)
+                })
 
-
-        $('#info').click(function() {
-            $('#userProfileImg').toggle('slow', 'linear')
-
-
+             
         })
-
-
-        $('#unlike').click(function() {
-            $.post('unlike.php', {
-                uid: <?php echo $details['user_id'] ?>,
-                unliked_uid: <?php echo $person['user_id'] ?>
-            }, function(data) {
-
-                console.log("data  : " + data)
-
-                $('#ulmsg').html(data)
-            })
-
-            $('#userInfoView').hide('slow', 'linear')
-            clickCount = (parseInt(clkCount.v) - 1)
-            clkCount.v = clickCount
-
-            console.log("after minusing: " + clickCount)
-            $('#userProfileName').html(name).fadeIn('fast')
-
-            $('#UserProfileAge').html(age)
-            $('#UserProfileState').html(loc)
-            $("#userProfileImg").hide().attr("src", "static/images/" + img).fadeIn('fast').css("z-index", "-1");
-
-
-        })
-
-        $('#like').click(function() {
-            uid = parseInt(<?php echo $details['user_id'] ?>)
-            liked_uid = parseInt(<?php echo $person['user_id'] ?>)
-
-            $.post('like.php', {
-                uid: <?php echo $details['user_id'] ?>,
-                liked_uid: <?php echo $person['user_id'] ?>
-            }, function(data) {
-
-                console.log("data  : " + data)
-
-                $('#ulmsg').html(data)
-            })
-
-            $('#userInfoView').hide('slow', 'linear')
-            clickCount = (parseInt(clkCount.v) + 1)
-            clkCount.v = clickCount
-
-            console.log("after adding: " + clickCount)
-            console.log("CURRENT_ARR_POS  : ")
-        })
-
-        $('#idddnfo').click(function() {
-            location.href = "";
-            var url = "http://userinfo.php";
-            window.location(url);
-        })
+ 
     </script>
 
 
