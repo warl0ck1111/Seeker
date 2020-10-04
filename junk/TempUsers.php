@@ -29,8 +29,6 @@ $roles = ['Admin'];
 		} ?>
 
 
-
-
 		<!-- Middle form - to create and edit  -->
 		<div class="action">
 			<h1 class="page-title">Create/Edit Admin User</h1>
@@ -73,44 +71,49 @@ $roles = ['Admin'];
 		<div class="table-div">
 			<!-- Display notification message -->
 			<?php include(ROOT_PATH . '/includes/messages.php') ?>
-
-			<?php if (empty($admins)): ?>
+			<!-- <form method="post" action="<?php //echo BASE_URL . 'admin/users.php'; ?>">
+			 <input type="text" name="key" value="<?php// echo $keyword; ?>" placeholder="Search Admin"> <button type="submit" class="btn" name="search">Search</button>
+			 </form> -->
+			<?php if (empty($admins)) : ?>
 				<h1>No admins in the database.</h1>
-			<?php else: ?>
+			
+			<?php else : ?>
 				<table class="table">
 					<thead>
 						<th>N</th>
 						<th>Admin</th>
 						<th>Role</th>
-						<th colspan="2">Action</th>
+						<th colspan="4">Action</th>
 					</thead>
 					<tbody>
-					<?php foreach ($admins as $key => $admin): ?>
-						<tr>
-							<td><?php echo $key + 1; ?></td>
-							<td>
-								<?php echo $admin['u_name']; ?>, &nbsp;
-								<?php echo $admin['phone']; ?>, &nbsp;
-								<?php echo $admin['email']; ?>	
-							</td>
-							<td><?php echo $admin['role']; ?></td>
-							<td>
-								<a class="fa fa-pencil btn edit"
-									href="users.php?edit-admin=<?php echo $admin['user_id'] ?>">
-								</a>
-							</td>
-							<td>
-								<a class="fa fa-trash btn delete" 
-								    href="users.php?delete-admin=<?php echo $admin['user_id'] ?>">
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
+						<?php foreach ($admins as $key => $admin) : ?>
+							<tr>
+								<td><?php echo $key + 1; ?></td>
+								<td>
+									<?php echo $admin['u_name']; ?>, &nbsp;
+
+									<?php echo $admin['phone']; ?>, &nbsp;
+									<?php echo $admin['email']; ?>
+								</td>
+								<td><?php echo $admin['role']; ?></td>
+								<td>
+									<a class="fa fa-pencil btn edit" href="users.php?edit-admin=<?php echo $admin['user_id'] ?>">
+									</a>
+								</td>
+								<td>
+									<a class="fa fa-trash btn delete" <?php echo 'href="users.php?delete-admin=' . $admin['user_id'] ?>>
+									</a>
+								</td>
+							</tr>
+						<?php endforeach ?>
 					</tbody>
 				</table>
 			<?php endif ?>
 		</div>
 		<!-- // Display records from DB -->
 	</div>
+
+
 </body>
+
 </html>

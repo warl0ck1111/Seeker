@@ -54,7 +54,7 @@ function UnSuspendSeeker($id){
         global $conn , $errors;
         $sql = "update users set suspended='false' where user_id =$id";
         if($result = mysqli_query($conn, $sql)){
-            $_SESSION['message'] = "User UnSuspended";
+            $_SESSION['message'] = "User unSuspended";
 
         }else{
             array_push($errors, "there was an error");
@@ -88,7 +88,7 @@ function getAllReports(){
     global $errors;
 	if (in_array($_SESSION['user']['role'], ['admin'])) {
 		global $conn, $roles, $keyword;
-		$sql = "SELECT * FROM reportedusers WHERE U_name or  rptr_u_name  or reason like '%$keyword%' "; 
+		$sql = "SELECT * FROM reportedusers WHERE U_name like '%$keyword%' or  rptr_u_name like '%$keyword%'  or reason like '%$keyword%' order by timestamp desc "; 
 		if($result = mysqli_query($conn, $sql)){
             $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 

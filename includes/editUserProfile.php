@@ -67,7 +67,7 @@ if (isset($_POST['save_edit'])) {
 
 	// Ensure that no username is populates twice. 
 	// both email and usernames should be unique and except me in query
-	$user_check_query = "SELECT * FROM users WHERE user_id !='$id'  LIMIT 1";
+	$user_check_query = "SELECT * FROM users WHERE user_id !='$id' and (u_name='$username' or email='$email' or phone = '$phone')  LIMIT 1";
 
 	$result = mysqli_query($conn, $user_check_query);
 	$user = mysqli_fetch_assoc($result);
@@ -108,6 +108,8 @@ if (isset($_POST['save_edit'])) {
 	if (count($errors) == 0) {
 		$query = "";
 
+		
+		//this whole code is useless TODO: CElan Code and TEST when---using update query and Check-user-query has handled bottleneck
 		if (($username === $details['u_name']) || ($email === $details['email']) || ($phone === $details['phone'])) {
 			//if only username is the same
 			if (($username === $details['u_name']) && ($email === $details['email'])) {

@@ -10,6 +10,7 @@ $username = "";
 $fname = "";
 $lname = "";
 $phone = "";
+$name = "";
 $role = "";
 $email = "";
 // general variables
@@ -35,8 +36,9 @@ if (isset($_POST['update_admin'])) {
 }
 // if user clicks the Delete admin button
 if (isset($_GET['delete-admin'])) {
+	$name = $_GET['name'];
 	$admin_id = $_GET['delete-admin'];
-	deleteAdmin($admin_id);
+	deleteAdmin($admin_id, $name);
 }
 // // if user clicks the search seeker button
 // if (isset($_POST['search'])) {
@@ -51,7 +53,7 @@ function getAdminUsers()
 {
 	if (in_array($_SESSION['user']['role'], ['admin'])) {
 		global  $keyword, $conn, $roles;
-		$sql = "SELECT * FROM users WHERE role = 'admin'"; //   AND U_name or l_name or f_name like '%$keyword%'
+		$sql = "SELECT * from users where role ='admin'"; 
 		$result = mysqli_query($conn, $sql);
 		$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -106,7 +108,7 @@ function createAdmin($request_values)
 		$email = esc($request_values['email']);
 		$password = esc($request_values['password']);
 		$passwordConfirmation = esc($request_values['passwordConfirmation']);
-		if(! is_integer($phone)) array_push($errors, "Invalid Charated entered for phone");
+		// if(! is_integer($phone)) array_push($errors, "Invalid Charated entered for phone");
 
 		if (isset($request_values['role'])) {
 			$role = esc($request_values['role']);
@@ -186,16 +188,18 @@ function createAdmin($request_values)
 		if (count($errors) == 0) {
 			$fgt_pwd = $password;
 			$password = md5($password); //encrypt the password before saving in the database
-			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, pwd, forgot_pwd_code created_at) 
-				  VALUES('$username','$fname','$lname','$phone', '$email', '$role', '$password', '$fgt_pwd', now())";
+			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, pwd, 
+			forgot_pwd_code, created_at) 
+				  VALUES('$username','$fname','$lname','$phone', '$email', '$role', '$password', 
+				  '$fgt_pwd', now())";
 			$result = mysqli_query($conn, $query);
 
 			if ($result) {
-				$_SESSION['message'] = "Admin user created successfully";
+				$_SESSION['message'] = $username."'s profile created successfully";
 				header('location: users.php');
 				exit(0);
 			} else {
-				array_push($errors, 'There was a problem creating New Admin User' . mysqli_error($conn));
+				array_push($errors, 'There was a problem creating '.$username.'\'s account ' . mysqli_error($conn));
 			}
 		}
 	} else {
@@ -253,27 +257,27 @@ function updateAdmin($request_values)
 		$query = "UPDATE users SET u_name='$username', f_name='$fname', l_name='$lname', phone='$phone', email='$email', role='$role', pwd='$password' WHERE user_id=$admin_id";
 		mysqli_query($conn, $query);
 
-		$_SESSION['message'] = "Admin user updated successfully";
+		$_SESSION['message'] = $username."'s account updated successfully";
 		header('location: users.php');
 		exit(0);
 	}
 }
 
 // delete admin user 
-function deleteAdmin($admin_id)
+function deleteAdmin($admin_id,$username)
 {
 	global $conn, $uName, $errors;
 	$query = "Select * from users where user_id=$admin_id";
 	if ($res = mysqli_query($conn, $query)) {
 		$uname = mysqli_fetch_all($res, MYSQLI_ASSOC);
 	} else {
-		array_push($errors, "Error fetching user details");
+		array_push($errors, "Error fetching user details".$conn->error);
 	}
 
 	$sql = "DELETE FROM users WHERE user_id=$admin_id";
 
 	if (mysqli_query($conn, $sql)) {
-		$_SESSION['message'] = $uname['u_name'] . " successfully deleted";
+		$_SESSION['message'] = $username . "'s account successfully deleted";
 		header("location: users.php");
 		exit(0);
 	} else {

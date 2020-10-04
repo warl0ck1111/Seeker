@@ -18,12 +18,12 @@
 
  		<!-- if user is not admin or Author -->
  		<?php if (!in_array($_SESSION['user']['role'], ['admin'])) {
-				header('location:' . BASE_URL . 'index.php');
+				header('location:' . ROOT_PATH . 'index.php');
 			} ?>
 
  		<!-- if usere is not an admin -->
  		<?php if (!in_array($_SESSION['user']['role'], ['admin', 'admin'])) {
-				header('location:' . BASE_URL . '/admin/dashboard.php');
+				header('location:' . ROOT_PATH . '/admin/dashboard.php');
 				array_push($errors, "you dont have that previllage");
 			} ?>
 
@@ -40,7 +40,7 @@
  		<div class="table-div">
  			<!-- Display notification message -->
  			<?php include(ROOT_PATH . '/includes/messages.php') ?>
-			<form method="post" action="<?php echo BASE_URL . 'admin/seekers.php'; ?>">
+			<form method="post" action="<?php echo ROOT_PATH . 'admin/seekers.php'; ?>">
 			 <input type="text" name="key" value="<?php echo $keyword; ?>" placeholder="Search Seekers"> <button type="submit" class="btn" name="search">Search</button>
 			 </form> 
  			<?php if (empty($seekers)) : ?>

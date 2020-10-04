@@ -7,6 +7,12 @@
 	?>
  <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
  <title>Seeker | Manage Seekers</title>
+ <style>
+	 tr:hover{
+		 color: white;
+		 background-color: #b4b4b4;
+	 }
+ </style>
  </head>
 
  <body>
@@ -18,12 +24,12 @@
 
  		<!-- if user is not admin or Author -->
  		<?php if (!in_array($_SESSION['user']['role'], ['admin'])) {
-				header('location:' . BASE_URL . 'index.php');
+				header('location:' . ROOT_PATH . 'index.php');
 			} ?>
 
  		<!-- if usere is not an admin -->
  		<?php if (!in_array($_SESSION['user']['role'], ['admin', 'admin'])) {
-				header('location:' . BASE_URL . '/admin/dashboard.php');
+				header('location:' . ROOT_PATH . '/admin/dashboard.php');
 				array_push($errors, "you dont have that previllage");
 			} ?>
 
@@ -45,7 +51,7 @@
  				<input type="text" name="username" value="<?php echo $username; ?>" placeholder="Username">
  				<input type="text" name="fname" value="<?php echo $fname; ?>" placeholder="First Name">
  				<input type="text" name="lname" value="<?php echo $lname; ?>" placeholder="Last Name">
- 				<input type="text" name="phone" value="<?php echo $phone; ?>" placeholder="Phone">
+ 				<input type="number" name="phone" value="<?php echo $phone; ?>" placeholder="Phone">
  				<input type="email" name="email" value="<?php echo $email ?>" placeholder="Email">
  				<input type="text" name="age" value="<?php echo $age; ?>" placeholder="age">
  				<!-- <input type="text" name="gender" value="<?php echo $gender; ?>" placeholder="gender"> -->
@@ -156,19 +162,19 @@
  								</td>
  								<!-- <td><?php //echo $seeker['role']; ?></td> -->
  								<td>
- 									<a class="fa fa-pencil btn edit" href="seekers.php?edit-seeker=<?php echo $seeker['user_id'] ?>">
+ 									<a class="fa fa-pencil btn edit" href="seekers.php?edit-seeker=<?php echo $seeker['user_id'] .'&name='.$seeker['u_name']?>">
  									</a>
  								</td>
  								<td>
- 									<a class="fa fa-trash btn delete" href="seekers.php?delete-seeker=<?php echo $seeker['user_id'] ?>">
+ 									<a class="fa fa-trash btn delete" onClick="javascript: return confirm('Are you sure you want to delete this Account?');"  href="seekers.php?delete-seeker=<?php echo $seeker['user_id'] .'&name='.$seeker['u_name'] ?>">
  									</a>
 								 </td>
 								 <td>
- 									<a class="fa fa-lock btn delete" href="seekers.php?suspend-seeker=<?php echo $seeker['user_id'] ?>">
+ 									<a class="fa fa-lock btn lock" href="seekers.php?suspend-seeker=<?php echo $seeker['user_id']  .'&name='.$seeker['u_name']?>">
  									</a>
 								 </td>
 								 <td>
- 									<a class="fa fa-unlock btn unsuspend" href="seekers.php?unsuspend-seeker=<?php echo $seeker['user_id'] ?>">
+ 									<a class="fa fa-unlock btn unlock" href="seekers.php?unsuspend-seeker=<?php echo $seeker['user_id'] .'&name='.$seeker['u_name'] ?>">
  									</a>
  								</td>
  							</tr>

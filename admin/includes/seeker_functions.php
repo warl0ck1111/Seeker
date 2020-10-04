@@ -8,13 +8,14 @@ $isEditingUser = false;
 $username = "";
 $fname = "";
 $lname = "";
+$name = "";
 $age = "";
 $gender = "";
 $preference = "";
 $phone = "";
 $role = "";
 $email = "";
-$fgt_pwd ="";
+$fgt_pwd = "";
 // general variables
 $errors = [];
 $isSeeker = false;
@@ -29,8 +30,9 @@ if (isset($_POST['create_seeker'])) {
 // if user clicks the Edit seeker button
 if (isset($_GET['edit-seeker'])) {
 	$isEditingUser = true;
+	$name = $_GET['name'];
 	$seeker_id = $_GET['edit-seeker'];
-	editSeeker($seeker_id);
+	editSeeker($seeker_id,$name);
 }
 // if user clicks the update seeker button
 if (isset($_POST['update_seeker'])) {
@@ -42,33 +44,36 @@ if (isset($_POST['search'])) {
 }
 // if user clicks the Delete seeker button
 if (isset($_GET['delete-seeker'])) {
+	$name = $_GET['name'];
 	$seeker_id = $_GET['delete-seeker'];
-	deleteSeeker($seeker_id);
+	deleteSeeker($seeker_id,$name);
 }
 
 // if user clicks the suspend-seeker button
 if (isset($_GET['suspend-seeker'])) {
+	$name = $_GET['name'];
 	$seeker_id = $_GET['suspend-seeker'];
-	suspendSeeker($seeker_id);
+	suspendSeeker($seeker_id, $name);
 }
 
 // if user clicks the unsuspend-seeker button
 if (isset($_GET['unsuspend-seeker'])) {
+	$name = $_GET['name'];
 	$seeker_id = $_GET['unsuspend-seeker'];
-	UnSuspendSeeker($seeker_id);
+	UnSuspendSeeker($seeker_id,$name);
 }
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 * - UnSuspends seeker
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function UnSuspendSeeker($id)
+function UnSuspendSeeker($id, $username)
 {
 	if (in_array($_SESSION['user']['role'], ['admin'])) {
 		global $conn, $errors;
 		$sql = "update users set suspended='false' where user_id =$id";
 		if ($result = mysqli_query($conn, $sql)) {
-			$_SESSION['message'] = "User UnSuspended";
+			$_SESSION['message'] = $username." has been unsuspended";
 		} else {
 			array_push($errors, "there was an error");
 		}
@@ -79,14 +84,14 @@ function UnSuspendSeeker($id)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 * - Suspends seeker
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-function suspendSeeker($id)
+function suspendSeeker($id, $username)
 {
 	global $conn, $errors;
 	if (in_array($_SESSION['user']['role'], ['admin'])) {
 		global $conn, $errors;
 		$sql = "update users set suspended='true' where user_id =$id";
 		if ($result = mysqli_query($conn, $sql)) {
-			$_SESSION['message'] = "User Suspended";
+			$_SESSION['message'] = $username." has been Suspended";
 		} else {
 			array_push($errors, "there was an error" . mysqli_error($conn));
 		}
@@ -102,8 +107,9 @@ function getSeekers()
 	if (in_array($_SESSION['user']['role'], ['admin'])) {
 		global $keyword, $conn, $roles;
 
-		$sql = "SELECT * FROM users WHERE role = 'seeker' AND U_name or l_name or f_name like '%$keyword%' order by created_at desc "; //WHERE role IS NOT NULL
+		$sql = "SELECT * FROM users WHERE role = 'seeker' AND (U_name like '%$keyword%' or l_name like '%$keyword%' or f_name like '%$keyword%') order by created_at desc "; //WHERE role IS NOT NULL
 		$result = mysqli_query($conn, $sql);
+	
 		$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 		return $users;
@@ -158,7 +164,8 @@ function createSeeker($request_values)
 		$password = esc($request_values['password']);
 		$passwordConfirmation = esc($request_values['passwordConfirmation']);
 
-		if (!is_integer($phone)) array_push($errors, "Invalid Charated entered for phone");
+		//if (!is_integer($phone)) array_push($errors, "Invalid Charated entered for phone");
+		
 		switch ($request_values['gender']) {
 			case ("Male"):
 				$gender = 'm';
@@ -251,7 +258,7 @@ function createSeeker($request_values)
 		$user = mysqli_fetch_assoc($result);
 		if ($user) { // if user exists
 			if ($user['u_name'] === $username) {
-				array_push($errors, "Username already exists");
+				array_push($errors, "Username has already been taken");
 			}
 
 			if ($user['email'] === $email) {
@@ -267,17 +274,17 @@ function createSeeker($request_values)
 
 			$password = md5($password); //encrypt the password before saving in the database
 			$query = "INSERT INTO users (u_name, f_name, l_name, phone, email, role, state, pwd,
-			 forgot_pwd_code age, gender,preference, created_at) 
+			 forgot_pwd_code, age, gender,preference, created_at) 
 				  VALUES('$username','$fname','$lname','$phone', '$email', '$role','$state', '$password',
 				   '$fgt_pwd', '$age', '$gender', '$preference',  now())";
 			$result = mysqli_query($conn, $query);
 
 			if ($result) {
-				$_SESSION['message'] = "Seeker created successfully login to add Profile Image And Bio";
+				$_SESSION['message'] = $username."'s has been profile created successfully, please login to add profile image & bio";
 				header('location: seekers.php');
 				exit(0);
 			} else {
-				array_push($errors, 'There was a problem creating New Seeker');
+				array_push($errors, 'There was a problem creating New Seeker\n'.$conn->error);
 			}
 		}
 	} else {
@@ -322,14 +329,12 @@ function editSeeker($seeker_id)
 function updateSeeker($request_values)
 {
 	global $conn, $errors, $role, $state, $username, $phone, $age, $gender,
-		$preference, $lname, $fname, $isEditingUser, $seeker_id, $email;
+		$preference, $lname, $fname, $isEditingUser, $seeker_id, $email, $fgt_pwd;
 	// get id of the seeker to be updated
 	$seeker_id = $request_values['seeker_id'];
 	// set edit state to false
 	$isEditingUser = false;
-
-
-
+	$details = getUserDetails($seeker_id);
 	$username = esc($request_values['username']);
 	$phone = esc($request_values['phone']);
 	$fname = esc($request_values['fname']);
@@ -375,33 +380,113 @@ function updateSeeker($request_values)
 	if ($password != $passwordConfirmation) {
 		array_push($errors, "The two passwords do not match");
 	}
+
+	// Ensure that no username is populates twice. 
+	// both email and usernames should be unique and except me in query
+	$user_check_query = "SELECT * FROM users WHERE user_id !='$seeker_id' and (u_name='$username' or email='$email' or phone = '$phone') LIMIT 1";
+
+	$result = mysqli_query($conn, $user_check_query);
+	$user = mysqli_fetch_assoc($result);
+
+	if (sizeof($user)>0) { // if user exists
+		if ($user['u_name'] === $username) {
+			array_push($errors, "Username already exists");
+		}
+		if ($user['email'] === $email) {
+			array_push($errors, "Email already exists");
+		}
+		if ($user['phone'] === $phone) {
+			array_push($errors, "Phone number already exists");
+		}
+	}
+
+
 	// register user if there are no errors in the form
 	if (count($errors) == 0) {
+		$fgt_pwd = $passwordConfirmation;
+
 		//encrypt the password (security purposes)
 		$password = md5($password);
 
-		$query = "UPDATE users SET u_name='$username',state='$state', f_name='$fname', age='$age', gender='$gender', preference='$preference', l_name='$lname', phone='$phone', email='$email', role='$role', pwd='$password' WHERE user_id=$seeker_id";
-		mysqli_query($conn, $query);
+########################################################################################################
 
-		$_SESSION['message'] = "Seeker updated successfully";
-		header('location: seekers.php');
-		exit(0);
+		// if (($username === $details['u_name']) || ($email === $details['email']) || ($phone === $details['phone'])) {
+		// 	//if only username is the same
+		// 	if (($username === $details['u_name']) && ($email === $details['email'])) {
+		// 		$query = "UPDATE  users set f_name='$fname', l_name='$lname',
+		// 					phone='$phone',  state='$state',  preference='$preference',
+		// 					gender='$gender',  role='$role',  age='$age', pwd='$password',
+		// 	forgot_pwd_code = '$fgt_pwd' where user_id= '$seeker_id' ";
+		// 	}
+
+		// 		//if only username is the same
+		// 	if (($username === $details['u_name']) && ($email != $details['email']) && ($phone != $details['phone'])) {
+		// 		$query = "UPDATE  users set f_name='$fname', l_name='$lname',  u_name='$username',
+		// 					phone='$phone', email='$email', state='$state',  preference='$preference',
+		// 					gender='$gender' ,role='$role', pwd='$password',
+		// 					forgot_pwd_code = '$fgt_pwd' age='$age' where user_id= '$seeker_id' ";
+		// 	}
+			
+		// 	//if only email is the same
+		// 	elseif (($email === $details['email']) && ($username != $details['u_name']) && ($phone != $details['phone'])) {
+		// 		$query = "UPDATE  users set f_name='$fname', l_name='$lname',u_name='$username',
+		// 					phone='$phone', state='$state',  preference='$preference',
+		// 					gender='$gender',  age='$age', pwd='$password', email='$email',
+		// 					forgot_pwd_code = '$fgt_pwd' where user_id= '$seeker_id' ";
+		// 	}
+			
+
+
+
+
+		// 	//if only phone is the same
+		// 	elseif (($phone === $details['phone']) && ($email != $details['email']) && ($username != $details['u_name'])) {
+		// 		$query = "UPDATE  users set f_name='$fname', l_name='$lname', u_name='$username',phone='$phone',
+		// 					email='$email', state='$state',  preference='$preference',
+		// 					gender='$gender',  age='$age' , role='$role', pwd='$password',
+		// 					forgot_pwd_code = '$fgt_pwd' where user_id= '$seeker_id' ";
+							
+		// 	} elseif (($username === $details['u_name']) && ($email === $details['email']) && ($phone === $details['phone'])) {
+		// 		$query = "UPDATE  users set f_name='$fname', l_name='$lname',u_name='$username', 
+		// 		phone='$phone', email='$email',	state='$state',  preference='$preference',
+		// 					gender='$gender', age='$age' , role='$role', pwd='$password',
+		// 					forgot_pwd_code = '$fgt_pwd' where user_id= '$seeker_id' ";
+		// 	}
+		// } else {
+		// 	//none are the same
+		// 		$query = "UPDATE users SET u_name='$username', state='$state',
+		// 	f_name='$fname', age='$age', gender='$gender', preference='$preference', 
+		// 	l_name='$lname', phone='$phone', email='$email', role='$role', pwd='$password',
+		// 	forgot_pwd_code = '$fgt_pwd' WHERE user_id=$seeker_id";
+		// }
+
+		########################################################################################################
+
+
+		$query = "UPDATE users SET u_name='$username', state='$state',
+					f_name='$fname', age='$age', gender='$gender', preference='$preference', 
+					l_name='$lname', phone='$phone', email='$email', role='$role', pwd='$password',
+					forgot_pwd_code = '$fgt_pwd' WHERE user_id=$seeker_id";
+		 if($result = mysqli_query($conn, $query)){
+
+			 $_SESSION['message'] = $username."'s account updated successfully";
+			 header('location: seekers.php');
+			 exit(0);
+		 }else{
+			 array_push($errors, "There was an Error updating ".$username."'s account:: $conn->error");
+		 }
+
 	}
 }
 
 // delete seeker  
-function deleteSeeker($seeker_id)
+function deleteSeeker($seeker_id, $username)
 {
 	global $conn, $uName, $errors;
-	$query = "Select u_name from users where user_id=$seeker_id";
-	$res = mysqli_query($conn, $query);
-	// $uName = mysqli_fetch_all($res, MYSQLI_ASSOC);
-	$uName = getUsername($seeker_id)['u_name'];
-	array_push($errors, $uName);
 	$sql = "DELETE FROM users WHERE user_id=$seeker_id";
 
 	if (mysqli_query($conn, $sql)) {
-		$_SESSION['message'] = $uName . " successfully deleted";
+		$_SESSION['message'] = $username . "'s account successfully deleted";
 		header("location: seekers.php");
 		exit(0);
 	} else {
@@ -409,16 +494,16 @@ function deleteSeeker($seeker_id)
 	}
 }
 
-function getUsername($id)
+function getUserDetails($id)
 {
 	global $conn, $errors;
 	$sql = "select * from users where user_id =$id limit 1";
 	$res = mysqli_query($conn, $sql);
 	if ($res) {
 		$data = mysqli_fetch_all($res, MYSQLI_ASSOC);
-		return $data['u_name'];
+		return $data;
 	} else {
-		array_push($errors, "there was an error fetching username");
+		array_push($errors, "there was an error fetching data \n ". $conn->error);
 	}
 }
 
@@ -434,7 +519,7 @@ function searchSeekers($keyword)
 		$data = mysqli_fetch_all($res, MYSQLI_ASSOC);
 		return $data['u_name'];
 	} else {
-		array_push($errors, "there was an error fetching username");
+		array_push($errors, "there was an error fetching username ".$conn->error);
 	}
 }
 
@@ -491,3 +576,10 @@ function getSuspendedSeekers()
 		return null;
 	}
 }
+
+
+
+
+
+
+		

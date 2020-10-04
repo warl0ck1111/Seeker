@@ -117,7 +117,7 @@ switch($details['gender']){
             </a>
         </div>
         <div class="cont"><a href="deleteAcc.php"> 
-                <div class=".delete"><span></span><?php echo "<td><a onClick=\"javascript: return confirm('Please confirm deletion');\" href='delete.php?id=".$details['user_id']."'>Delete Account</a></td><tr>"; ?>
+                <div class=".delete"><span></span><?php echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete your Account');\" href='delete.php?id=".$details['user_id']."'>Delete Account</a></td><tr>"; ?>
 </span></div>
             </a></div>
     </div>
