@@ -8,6 +8,15 @@ $roles = ['Admin'];
 ?>
 <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
 <title>Admin | Manage users</title>
+<style>
+	   #tr:hover{
+		 color: white;
+		 background-color: #b4b4b4;
+	 }
+
+	
+	
+ </style>
 </head>
 
 <body>
@@ -86,7 +95,7 @@ $roles = ['Admin'];
 					</thead>
 					<tbody>
 					<?php foreach ($admins as $key => $admin): ?>
-						<tr>
+						<tr  id="tr" <?php if ($admin['suspended']==='true') echo "style='background: orangered'"; ?>>
 							<td><?php echo $key + 1; ?></td>
 							<td>
 								<?php echo $admin['u_name']; ?>, &nbsp;
@@ -100,8 +109,8 @@ $roles = ['Admin'];
 								</a>
 							</td>
 							<td>
-								<a class="fa fa-trash btn delete" 
-								    href="users.php?delete-admin=<?php echo $admin['user_id'] ?>">
+								<a class="fa fa-trash btn delete " 
+								  href="users.php?delete-admin=<?php echo $admin['user_id'] ?>">
 								</a>
 							</td>
 						</tr>

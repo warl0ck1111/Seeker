@@ -7,6 +7,12 @@
 	?>
  <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
  <title>Seeker | Manage Seekers</title>
+ <style>
+	   #tr:hover{
+		 color: white;
+		 background-color: #b4b4b4;
+	 }
+ </style>
  </head>
 
  <body>
@@ -60,7 +66,7 @@
  					<tbody>
 						 <?php foreach ($seekers as $key => $seeker) : ?>
 							<?php  ?>
- 							<tr >
+ 							<tr id="tr">
  								<td><?php echo $key + 1; ?></td>
  								<td >
  									<?php echo $seeker['u_name']; ?> &nbsp;</td>
