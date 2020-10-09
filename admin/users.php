@@ -109,7 +109,7 @@ $roles = ['Admin'];
 								</a>
 							</td>
 							<td>
-								<a class="fa fa-trash btn delete " 
+								<a class="fa fa-trash btn delete "  onClick="javascript: return confirm('Are you sure you want to delete this admin Account?');"
 								  href="users.php?delete-admin=<?php echo $admin['user_id'] ?>">
 								</a>
 							</td>

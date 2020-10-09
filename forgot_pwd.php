@@ -5,16 +5,16 @@ $errors = array();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $email = "";
+    $secAnswer = $email = "";
 
     switch ($_POST){
-        case empty($_POST["username"]) && empty($_POST["email"]):
-        array_push($errors, "Username & Email field can not be empty ");
+        case empty($_POST["sec_answer"]) && empty($_POST["email"]):
+        array_push($errors, "Security Answer & Email field can not be empty ");
         break;
 
     
-        case empty($_POST["username"]):
-            array_push($errors, "Username is required");
+        case empty($_POST["sec_answer"]):
+            array_push($errors, "Security answer is required");
         break;
 
         case empty($_POST["email"]):
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         break;
 
     }
-    $username = esc($_POST["username"]);
+    $secAnswer = esc($_POST["sec_answer"]);
     $email = esc($_POST["email"]);
 
 
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (count($errors) == 0) {
         //check if users exists and details correct
-        $query1 = "SELECT * from users where u_name = '$username' and email = '$email' limit 1";
+        $query1 = "SELECT * from users where  security_answer = '$secAnswer' and email = '$email' limit 1";
         $qr1 = mysqli_query($conn, $query1);
         if(!$qr1){
             array_push($errors, 'there was an error...please try again');
@@ -53,27 +53,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         if ($qr1->num_rows > 0) {
             
-            $gpwd = $username . rand(9999, 99999);
+            $gpwd = "seeker" . rand(9999, 99999);
             $pwd = md5($gpwd);
 
-            $query2 = "Update users set pwd='$pwd', forgot_pwd_code = '$gpwd' where u_name='$username' and email='$email'";
+            $query2 = "Update users set pwd='$pwd', forgot_pwd_code = '$gpwd' where email='$email'";
             $qr2 = mysqli_query($conn, $query2);
             if ($conn->affected_rows > 0) {
             array_push($errors, 'pwd changed successfully');
             
-            array_push($errors, $pwd);
+            
 
                 echo "";
                 echo <<<END
                          
-                        "Your new Password is" . $gpwd . "\n 
+                        "Your new Password is "$gpwd"\n 
                             
-                            Go back and  <a href='index.php?uname=$username'>login</a>
+                            Go back and  <a href='index.php'>login</a>
                             "
                         END;
             }
         } else {
-            array_push($errors, "No user with such Credentials ");
+            array_push($errors, "wrong email or answer");
         }
     }
 }
@@ -87,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
     <script src="jquery.js"></script>
+    <link rel="stylesheet" href="">
 <link rel="stylesheet" href="css/public_styling.css">
 
 
@@ -96,12 +97,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div style="width: 40%; margin: 20px auto;">
 <h2>Forgot Password</h2> 
-    <form id="frm_check" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <form  id="frm_check" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <?php
 
         include(ROOT_PATH .  "/includes/errors.php");
         ?>
-        <input id="username" type="text" name="username" placeholder="username">
+        <input id="sec_answer" type="text" name="sec_answer" placeholder="what was the name of your childhood best friend?">
 
         <input id="email" type="text" name="email" placeholder="email">
 
@@ -110,6 +111,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a class="fa fa-lock btn suspend" href="login.php">Back</a>
 
 </div>
+
+
 </body>
 
 </html>

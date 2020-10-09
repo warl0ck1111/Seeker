@@ -22,6 +22,16 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<style>
+		input{
+			border-radius: 5px;
+			height: 35px;
+		}
+		input:hover{
+			background-color: #b4b4b4;
+			color: black;
+		}
+	</style>
 </head>
 
 <body>
@@ -62,10 +72,16 @@
 
 						<div > <button class="btn btn-lg btn-block btn-outline-dark" style="width: 100px; display:block; margin-top:20px" type="submit" name="login_btn">Sign in</button>
 
-							<a style="color: purple; margin-left:20px" href="register.php"><button class="btn btn-lg btn-block btn-outline-dark" style="width: 100px; text-decoration:none" class="btn" type="submit" name="login_btn">Join us</button></a>
-						</div>
+							
 					</form>
 				</div>
+				<a style=" margin-left:20px" href="register.php"><button class="btn btn-lg btn-block btn-outline-dark" style="width: 100px; text-decoration:none" class="btn" type="reg" name="reg_btn">Join us</button></a>
+				</div>
+				</p><p>
+			<?php  if (count($errors) > 0)
+					echo '<a style="color: orangered;" href="forgot_pwd.php">Forgot Password?</a>
+					</p>';
+				?>
 
 				<div class="col-md-3">
 

@@ -6,6 +6,12 @@
 
 <title>Courtship Seeker | Sign up </title>
 <link rel="stylesheet" href="css/public_styling.css">
+<style>
+	input:hover{
+			background-color: #b4b4b4;
+			color: black;
+		}
+</style>
 </head>
 <body>
 <body>
@@ -67,13 +73,14 @@
 			<input type="email" name="email"  placeholder="Email">
 			<input type="password" name="password_1" placeholder="Password">
 			<input type="password" name="password_2" placeholder="Password confirmation">
+			<input type="text" name="sec_answer" placeholder="what was the name of your childhood best friend">
 			<input type="file" name="profile_image" >
 
 			<button type="submit" class="btn" name="reg_user">Register</button>
 			<p>
 				Already a member? <a href="login.php">Sign in</a>
 			</p><p>
-				 <a href="forgot_pwd.php">Forgot Password?</a>
+			<a style="color: tomato;" href="forgot_pwd.php">Forgot Password?</a>
 			</p>
 		</form>
 	</div>

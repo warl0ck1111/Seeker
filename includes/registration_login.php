@@ -17,6 +17,7 @@ if (isset($_POST['reg_user'])) {
 	$email = esc($_POST['email']);
 	$password_1 = esc($_POST['password_1']);
 	$password_2 = esc($_POST['password_2']);
+	$secAnswer = esc($_POST['sec_answer']);
 
 
 	// form validation: ensure that the form is correctly filled
@@ -37,6 +38,9 @@ if (isset($_POST['reg_user'])) {
 	}
 	if (empty($email)) {
 		array_push($errors, "Oops.. Email is missing");
+	}
+	if (empty($secAnswer)) {
+		array_push($errors, "Security answer needed in case you forget your password");
 	}
 	if (empty($password_1)) {
 		array_push($errors, "uh-oh you forgot the password");
@@ -79,10 +83,10 @@ if (isset($_POST['reg_user'])) {
 
 		$password = md5($password_1); //encrypt the password before saving in the database
 		$query = "INSERT INTO users (f_name, l_name, u_name, phone, email, pwd, state, lga, preference,
-					gender, profile_image, forgot_pwd_code,  created_at, role) 
+					gender, profile_image, forgot_pwd_code,  created_at, role,security_answer) 
 					  VALUES('$fname','$lname','$username','$phone', '$email', '$password',
 					   '$state',null, 'mf',
-					  'm','$profile_image','$password_1', now(),'seeker')";
+					  'm','$profile_image','$password_1', now(),'seeker',$secAnswer)";
 
 		$res = mysqli_query($conn, $query);
 		if (!$res) {

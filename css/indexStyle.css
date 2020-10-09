@@ -186,6 +186,10 @@ p {
 .pricing-column {
   padding: 3% 2%;
 }
+input:hover{
+  background-color: #b4b4b4;
+  color: black;
+}
 
 /* CTA Section */
 

@@ -18,7 +18,10 @@ a { text-decoration: none; }
 ul, ol { margin-left: 40px; }
 hr { margin: 10px 0px; opacity: .25; }
 
-
+input:hover{
+	background-color: #b4b4b4;
+	color: black;
+}
 /* FORM DEFAULTS */
 form h2 {
 	margin: 25px auto;
@@ -338,16 +341,20 @@ form input:focus {
 	border: 1px solid #3c763d;
 	border-radius: 5px; 
 	text-align: center;
+	border-radius: 5px;
+	
 }
 .error {
 	color: #a94442; 
 	background: #f2dede; 
 	border: 1px solid #a94442; 
 	margin-bottom: 20px;
+	border-radius: 5px;
 }
 .validation_errors p {
 	text-align: left;
 	margin-left: 10px;
+	
 }
 .logged_in_info {
 	text-align: right; 

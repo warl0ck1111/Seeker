@@ -19,5 +19,8 @@
 			<p>
 				Not yet a member? <a href="register.php">Sign up</a>
 			</p>
+			</p><p>
+				 <a style="color: tomato;" href="forgot_pwd.php">Forgot Password?</a>
+			</p>
 		</form>
 	</div>
