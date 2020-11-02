@@ -1,3 +1,8 @@
+<?php
+include('config.php');
+include_once('includes/registration_login.php');
+ ?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,17 +20,19 @@
             padding-right: 30px;
         }
 
-
+        
         .cont .delete {
             color: orangered;
             text-align: center;
 
         }
 
+
         div .menu a {
             text-decoration: none;
             color: black;
         }
+
 
         .side a {
             text-decoration: none;
@@ -39,9 +46,6 @@
         <div class="side">
             <?php
 
-            include('config.php');
-            include_once("includes/registration_login.php");
-
             if (empty($_SESSION['user'])) die("<h3>Sorry, You must Be <a href=login.php>Logged in </a>First</h2></div></body></html>");
             $person = array();
             $username = $_SESSION['user']['u_name'];
@@ -51,6 +55,7 @@
             if (isset($_GET['uid'])) {
                 $uid = $_GET['uid'];
                 $person = getUserById($uid);
+                
             }
             switch ($person['preference'] || $person['gender']) {
                 case 'm':
@@ -96,7 +101,7 @@
         <div class="cont"> <span>Username</span> <span id="username"><?php echo $person['u_name'] ?></span></div>
         <div class="cont"><span>Age</span> <span id="age"><?php echo $person['age'] ?></span></div>
         <div class="cont"><span>Bio</span> <label name="bio" id="bio" cols="30" rows="2"> <?php echo $person['bio'] ?></label></div>
-        <div class="cont"> <span><a href="<?php echo 'reportUser.php?uid='.$person['user_id'] ?>">Report <?php echo  $person['u_name'] ?></span> </div></a>
+        <div class="cont"> <span><a href="<?php echo 'reportUser.php?uid=' . $person['user_id'] ?>">Report <?php echo  $person['u_name'] ?></span> </div></a>
         <div class="contT"><span><strong>Contact</strong></span></span></div>
         <div class="cont"><span>Help & Support</span></div>
         <div class="contT"><span><strong>Legal</strong></span></div>
@@ -125,39 +130,68 @@
         </div>
         <?php include("includes/errors.php") ?>
         <span id="ulmsg"></span>
+
+
         <div class="buttons">
-            <div id="unlike" class="no">
+
+          
+         
+                <div id="unlike" class="no">
                 <i class="fas fa-times"></i>
             </div>
-            <!-- <div class="star" id="info">
-                <i class="fas fa-info fa"></i>
-            </div> -->
-            <!-- <div id="like" class="heart">
+
+            <div id="like" class="heart">
                 <i class="fas fa-heart"></i>
-            </div> -->
+            </div>
+
         </div>
-    </div>
 
-    <script>
-        //CURRENT_ARR_POS = parseInt( )
-    
-    $('#unlike').click(function() {
-                    $.post('unlike.php', {
-                        uid: <?php echo $details['user_id'] ?>,
-                        unliked_uid: <?php  $person['user_id']  ?>
-                    }, function(data) {
 
-                        console.log("data  : " + data)
+           
+        </div>
+
+        <script>
+            //CURRENT_ARR_POS = parseInt( )
+
+            $('#unlike').click(function() {
+                $.post('unlike.php', {
+                    uid: <?php echo $details['user_id']; ?>,
+                    unliked_uid: <?php echo $person['user_id'] ; ?>
+                }, function(data) {
+
+                    console.log("data  : " + data)
+                    if (data != "") {
                         var url = " people.php";
-                window.location.href = url;
+                        $('#ulmsg').html(data)
+                      
+                       window.location.href = url;
+                    }
+
+
                     
-                //   $('#ulmsg').html(data)
                 })
 
-             
-        })
- 
-    </script>
+
+            });
+            //TODO: if user has already been unliked before hide button
+            $('#like').click(function() {
+
+                $.post('like.php', {
+                    uid: <?php echo $details['user_id'] ?>,
+                    liked_uid: <?php echo $person['user_id'] ?>
+                }, function(data) {
+
+                    console.log("data  : " + data)
+
+                    if (data != "") {
+                        var url = " people.php";
+                    $('#ulmsg').html(data)
+                        window.location.href = url;
+                    }
+                })
+
+            })
+        </script>
 
 
     </div>

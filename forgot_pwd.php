@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <input id="email" type="text" name="email" placeholder="email">
 
-        <input id="submit" type="submit" name="submit" value="Get Password">
+        <input id="submit" type="submit" name="submit" value="Generate new password">
     </form>
     <a class="fa fa-lock btn suspend" href="login.php">Back</a>
 

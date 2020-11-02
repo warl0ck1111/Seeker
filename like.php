@@ -2,9 +2,9 @@
 require_once 'config.php';
 $errors = array();
 if (isset($_POST['liked_uid'])) { // of using isset must be from an ajax call
-  $liked_id = esc($_POST['liked_uid']);
-  $user_id = esc($_POST['uid']);
-  //$uname = esc($_POST['uname']);
+  $liked_id = escs($_POST['liked_uid']);
+  $user_id = escs($_POST['uid']);
+  //$uname = escs($_POST['uname']);
 
 
   $sql = "select * from likes where user_id = '$user_id' and liked_id = '$liked_id' limit 1 ";
@@ -13,8 +13,11 @@ if (isset($_POST['liked_uid'])) { // of using isset must be from an ajax call
   //TODO: check if user is matched using ajax 
   //check if users have already been liked before
   if ($run->num_rows < 1) {
-    echo $user_id . "    " . esc($_POST['liked_uid']);
+    echo $user_id . "    " . escs($_POST['liked_uid']);
     $query = "INSERT into likes ( user_id, liked_id,timestamp) values( '$user_id', '$liked_id', now()) ";
+              //this code needs checking
+    // $sql2 = "DELETE from unlikes where user_id = '$user_id' and unliked_uid = '$unliked_id' "; // OR  user_id = '$unliked_id' and liked-id='$user_id'
+    // $res1 = mysqli_query($conn, $sql2);
     $res = mysqli_query($conn, $query);
     if (!$res) {
       array_push($errors, "There was an error inserting data");
@@ -29,7 +32,7 @@ if (isset($_POST['liked_uid'])) { // of using isset must be from an ajax call
 }
 
 /// escape value from form
-function esc(String $value)
+function escs(String $value)
 {
   // bring the global db connect object into function
   global $conn;
@@ -57,7 +60,7 @@ function showLikes($user_id)
   $likes_arr = array();
 
    
-  //$uname = esc($_POST['uname']);
+  //$uname = escs($_POST['uname']);
   $query = "SELECT * from likes where liked_id = '$user_id'";
   $result = mysqli_query($conn, $query);
   //check if query executed succesfulyy
@@ -78,9 +81,9 @@ function showPpleILiked($user_id)
 {
   global $conn;
   if (isset($_POST['liked_uid'])) { // if using isset must be from an ajax call
-    $liked_id = esc($_POST['liked_uid']);
-    $user_id = esc($_POST['uid']);
-    //$uname = esc($_POST['uname']);
+    $liked_id = escs($_POST['liked_uid']);
+    $user_id = escs($_POST['uid']);
+    //$uname = escs($_POST['uname']);
     $query = "SELECT liked_id from likes where user_id = '$user_id'";
     $result = mysqli_query($conn, $query);
 
@@ -100,7 +103,7 @@ function getMatches($user_id)
   global $conn;
 
   $likes_arr = showLikes($user_id);
-  //$user_id = esc($user_id);
+  //$user_id = escs($user_id);
   $matches = array();
   $matchFound = 0;
   for ($i = 0; $i < sizeof($likes_arr); $i++) {
@@ -123,3 +126,5 @@ function getMatches($user_id)
   }
   return $matches;
 }
+
+

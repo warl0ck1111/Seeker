@@ -79,7 +79,7 @@
         <div class="contT"><span><strong>Legal</strong></span></div>
         <div class="cont"><span><a href="privacypolicy.html">Privacy Policy</a></span></div>
         <div class="cont"><span><a href="t&c.html">Terms & Condition</a></span></div>
-        <div class="cont"><span><a href="licence.html">License</a></span></div>
+        <div class="cont"><span><a href="licencecomposer">License</a></span></div>
          
 
     </div>
