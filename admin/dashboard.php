@@ -1,12 +1,12 @@
 <?php
-include('../config.php'); ?>
+require('../config.php'); ?>
 <?php if (!in_array($_SESSION['user']['role'], ["admin"])) {
 	header('location:' . BASE_URL . 'index.php');
 } ?>
 
-<?php include(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
+<?php require(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
 
-<?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
+<?php require(ROOT_PATH . '/admin/includes/head_section.php'); ?>
  
 <title>Admin | Dashboard</title>
 </head>
@@ -35,7 +35,7 @@ include('../config.php'); ?>
 	<div class="container dashboard">
 		<h1>Welcome</h1>
 		<!-- validation errors for the form -->
-		<?php include(ROOT_PATH . '/includes/errors.php') ?>
+		<?php require(ROOT_PATH . '/includes/errors.php') ?>
 
 
 		<div class="stats" >

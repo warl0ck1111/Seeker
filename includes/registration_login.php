@@ -67,7 +67,7 @@ if (isset($_POST['reg_user'])) {
 
 	// // Get image name
 	// $profile_image = $_FILES['profile_image']['name'];
-	// if (empty($profile_image)) { array_push($errors, "profile image is required"); }
+	// if (empfwty($profile_image)) { array_push($errors, "profile image is required"); }
 	// // image file directory
 	// $target = "static/images/" . basename($username,".jpg");
 	// print_r($_FILES['profile_image']);
@@ -86,22 +86,23 @@ if (isset($_POST['reg_user'])) {
 					gender, profile_image, forgot_pwd_code,  created_at, role,security_answer) 
 					  VALUES('$fname','$lname','$username','$phone', '$email', '$password',
 					   '$state',null, 'mf',
-					  'm','$profile_image','$password_1', now(),'seeker',$secAnswer)";
+					  'm','$profile_image','$password_1', now(),'seeker','$secAnswer')";
 
 		$res = mysqli_query($conn, $query);
 		if (!$res) {
 			array_push($errors, "There was an error inserting data");
-			echo mysqli_error($conn);
-			exit();
+			array_push($errors, mysqli_error($conn));
+			//exit();
 		}
-		// get id of created user
+		if(count($errors) == 0){
+			// get id of created user
 		$reg_user_id = mysqli_insert_id($conn);
 
 		// put logged in user into session array
 		$_SESSION['user'] = getUserById($reg_user_id);
 
 		// if user is admin, redirect to admin area
-		if (in_array($_SESSION['user']['role'], ["admin", "seeker"])) {
+		if (in_array($_SESSION['user']['role'], ["admin"])) {
 			$_SESSION['message'] = "You are now logged in";
 			// redirect to admin area
 			header('location: ' . BASE_URL . '/admin/dashboard.php');
@@ -113,6 +114,7 @@ if (isset($_POST['reg_user'])) {
 			exit(0);
 		}
 	}
+		}
 }
 
 // LOG USER IN

@@ -1,6 +1,6 @@
 <?php 
 
-if(isset($_GET['id'])){
+if($_SERVER["REQUEST_METHOD"] == "GET"){
     $user_id = $_GET['id'];
     deleteUser($user_id);
 }

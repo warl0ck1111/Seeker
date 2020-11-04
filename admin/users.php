@@ -1,12 +1,12 @@
-<?php include('../config.php'); ?>
-<?php include(ROOT_PATH . '/admin/includes/admin_function.php'); ?>
+<?php require('../config.php'); ?>
+<?php require(ROOT_PATH . '/admin/includes/admin_function.php'); ?>
 <?php
 // Get all admin users from DB
 $admins = getAdminUsers();
 
 $roles = ['Admin'];
 ?>
-<?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
+<?php require(ROOT_PATH . '/admin/includes/head_section.php'); ?>
 <title>Admin | Manage users</title>
 <style>
 	   #tr:hover{
@@ -21,10 +21,10 @@ $roles = ['Admin'];
 
 <body>
 	<!-- admin navbar -->
-	<?php include(ROOT_PATH . '/admin/includes/navbar.php') ?>
+	<?php require(ROOT_PATH . '/admin/includes/navbar.php') ?>
 	<div class="container content">
 		<!-- Left side menu -->
-		<?php include(ROOT_PATH . '/admin/includes/menu.php') ?>
+		<?php require(ROOT_PATH . '/admin/includes/menu.php') ?>
 
 		<!-- if user is not Admin or Author -->
 		<?php if (!in_array($_SESSION['user']['role'], ['admin'])) {
@@ -47,7 +47,7 @@ $roles = ['Admin'];
 			<form method="post" action="<?php echo BASE_URL . 'admin/users.php'; ?>">
 
 				<!-- validation errors for the form -->
-				<?php include(ROOT_PATH . '/includes/errors.php') ?>
+				<?php require(ROOT_PATH . '/includes/errors.php') ?>
 
 				<!-- if editing user, the id is required to identify that user -->
 				<?php if ($isEditingUser === true) : ?>
@@ -81,7 +81,7 @@ $roles = ['Admin'];
 		<!-- Display records from DB-->
 		<div class="table-div">
 			<!-- Display notification message -->
-			<?php include(ROOT_PATH . '/includes/messages.php') ?>
+			<?php require(ROOT_PATH . '/includes/messages.php') ?>
 
 			<?php if (empty($admins)): ?>
 				<h1>No admins in the database.</h1>

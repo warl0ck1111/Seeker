@@ -1,11 +1,11 @@
-<?php include('../config.php'); ?>
- <?php include(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
+<?php require('../config.php'); ?>
+ <?php require(ROOT_PATH . '/admin/includes/seeker_functions.php'); ?>
  <?php
 	// Get all seeker users from DB
 	$seekers = getSuspendedSeekers();
 	$roles = ['Seeker'];
 	?>
- <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
+ <?php require(ROOT_PATH . '/admin/includes/head_section.php'); ?>
  <title>Seeker | Manage Seekers</title>
  <style>
 	   #tr:hover{
@@ -17,10 +17,10 @@
 
  <body>
  	<!-- seeker navbar -->
- 	<?php include(ROOT_PATH . '/admin/includes/navbar.php') ?>
+ 	<?php require(ROOT_PATH . '/admin/includes/navbar.php') ?>
  	<div class="container content">
  		<!-- Left side menu -->
- 		<?php include(ROOT_PATH . '/admin/includes/menu.php') ?>
+ 		<?php require(ROOT_PATH . '/admin/includes/menu.php') ?>
 
  		<!-- if user is not admin or Author -->
  		<?php if (!in_array($_SESSION['user']['role'], ['admin'])) {
@@ -45,7 +45,7 @@
  		<!-- Display records from DB-->
  		<div class="table-div">
  			<!-- Display notification message -->
- 			<?php include(ROOT_PATH . '/includes/messages.php') ?>
+ 			<?php require(ROOT_PATH . '/includes/messages.php') ?>
 			 
  			<?php if (empty($seekers)) : ?>
  				<h1>No seekers in the database.</h1>
