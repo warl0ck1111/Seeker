@@ -31,6 +31,7 @@
  		<?php if (!in_array($_SESSION['user']['role'], ['admin', 'admin'])) {
 				header('location:' . ROOT_PATH . '/admin/dashboard.php');
 				array_push($errors, "you dont have that previllage");
+				
 			} ?>
 
 
@@ -151,7 +152,7 @@
  					</thead>
  					<tbody>
  						<?php foreach ($seekers as $key => $seeker) : ?>
- 							<tr  id="tr" <?php if ($seeker['suspended']==='true') echo "style='background: orangered'"; ?>>
+ 							<tr  id="tr" <?php if ($seeker['suspended'] ==='true') echo "style='background: orangered'"; ?>>
  								<td><?php echo $key + 1; ?></td>
  								<td >
  									<?php echo $seeker['u_name']; ?> &nbsp;</td>

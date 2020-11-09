@@ -1,7 +1,12 @@
-<?php if (count($errors) > 0) : ?>
-  <div class="message error validation_errors" >
-  	<?php foreach ($errors as $error) : ?>
-  	  <p><?php echo $error ?></p>
-  	<?php endforeach ?>
-  </div>
-<?php endif ?>
+<?php 
+
+echo '<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>'. $title .'</title>
+<link rel="stylesheet" href="css/public_styling.css">
+';
+
