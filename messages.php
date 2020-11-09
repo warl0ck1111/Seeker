@@ -15,6 +15,10 @@ include("like.php"); ?>
 	<title>Messages</title>
 	<script src="jquery.js"></script>
 	<style>
+		.msger {
+			height: 500px;
+		}
+
 		.container {
 			border: 2px solid #dedede;
 			background-color: #f1f1f1;
@@ -75,6 +79,7 @@ include("like.php"); ?>
 			$errors = array();
 
 			if (!empty($_SESSION['user'])) {
+				$sId = $_SESSION['user']['user_id'];
 				$details = $_SESSION['user'];
 				$username = $details['u_name'];
 				$uid = $details['user_id'];
@@ -95,7 +100,9 @@ include("like.php"); ?>
 					<?php include(ROOT_PATH .  "/includes/errors.php"); ?>
 
 			</a>
-			<!-- <span><?php echo $_SESSION['user']['u_name'] ?> -->
+			
+
+			<!-- End Div Side -->
 		</div>
 
 		<div class="menu">
@@ -106,7 +113,9 @@ include("like.php"); ?>
 
 		</div>
 		<?php
-
+		//import users class to fetch user (receiver) details
+		require "db/Users.php";
+		$objUser = new users();
 		$match_arr = getMatches($uid);
 
 		echo " <span style='color: orangered; padding:0 8px '><strong>Matches</strong></span> ";
@@ -116,9 +125,12 @@ include("like.php"); ?>
 			for ($i = 0; $i < $res_size; $i++) {
 				$matched_usr_id = $match_arr[$i]['user_id'];
 
+				$objUser->setId($matched_usr_id);
+
+				$recName = $objUser->getUserById()['u_name'];
 				$srctime =  $match_arr[$i]['timestamp'];
 				//get the matched users details from User table
-				// TODO: join the likes table with users table so u dont have to do what you're about to do
+				// TODO: join the likes table with users table so u dont have to do what you're about to do lol
 				$sql = "SELECT * from users where user_id = '$matched_usr_id'";
 				$result = mysqli_query($conn, $sql);
 				if ($result) {
@@ -129,29 +141,27 @@ include("like.php"); ?>
 					$srcName =  $ppl[0]['u_name'];
 					// $srctime =  $ppl[0]['timestamp'];
 					//print $srcImg;
-					$d = date('M j Y g:i A', strtotime($srctime));
+					$dayMonth = date('M j Y g:i A', strtotime($srctime));
+
 
 					echo <<<END
-				 
-				<a href='messages.php?rid=$matched_usr_id' style='color:black';>
-						<div class="messages">
-						<div class="avatar">
-							<img src=static/images/$srcImg alt="" />
-						</div>
-						<div class="message">
-							<div class="user">$srcName</div>
-							<div class="text">$d</div>
-						</div>
-					</div>    
-						</a>
-
-				END;
+							<a href='messages.php?rid=$matched_usr_id&recName=$recName' style='color:black';>
+									<div class="messages">
+									<div class="avatar">
+										<img src=static/images/$srcImg alt="" />
+									</div>
+									<div class="message">
+										<div class="user">$srcName</div>
+										<div class="text time">$dayMonth</div>
+									</div>
+								</div>    
+									</a>
+							END;
 				}
 			}
 		} else {
 			echo <<<END
 				<hr>
-						
 						<div class="message">
 							<div class="user"></br><Strong>Sorry You Have No Matches Yet</Strong></div>
 							<div class="text"></div>
@@ -161,55 +171,84 @@ include("like.php"); ?>
 		?>
 	</div>
 	<!-- ////////////////////////////////chat section///////////////////////////////////////// -->
+<?php 
 
-	<section class="msger">
-		<header class="msger-header">
-			<div class="msger-header-title">
-				<i class="fas fa-comment-alt"></i> SimpleChat
-			</div>
-			<div class="msger-header-options">
-				<span><i class="fas fa-cog"></i></span>
-			</div>
-		</header>
+if(isset($_GET['rid'])):
+?>
+<?php
+$obj = new users();
+$r =$obj->setId( $_GET['rid']);
+$rdetails = $obj->getUserById();
+?>
+<!-- chat section header -->
+<section class="msger">
+		<a  href="userinfo.php?uid=<?php echo $rdetails["user_id"];?>">
+			<header class="msger-header">
+				<div class="header">
+					<div class="avatar">
+						<img src=<?php echo "static/images/" . $rdetails['profile_image'] ?> alt="<?php echo $rdetails['u_name'] ?>" />
+					</div>
+					<div class="title"><?php echo $rdetails['u_name'] ?></span> </div>
+
+
+			</header>
+		</a>
+	<!--end  chat section header -->
+
 
 		<main class="msger-chat">
-			<div class="msg left-msg">
-				<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>
+			<?php
+			require "db/chatrooms.php";
+			$objChats = new Chatrooms();
+			$tempRId = "";
+			if (isset($_GET['rid'])) {
+				$tempRId = $_GET['rid'];
+			}
+			$chats = $objChats->getChats($uid, $tempRId);
+			//print_r($chats);
 
-				<div class="msg-bubble">
-					<div class="msg-info">
-						<div class="msg-info-name">SENDER</div>
-						<div class="msg-info-time">12:45</div>
-					</div>
 
-					<div class="msg-text">
-						Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
-					</div>
-				</div>
+
+
+			foreach ($chats as $key => $chat) {
+				$side = "left";
+				$msg = $chat['messageString'];
+				$name = $chat["u_name"];
+				$time = date('M j Y g:i A', strtotime($chat["timestamp"]));
+				$img = "static/images/" . $chat['profile_image'];
+
+				if ($_GET['rid'] == $chat['receiver']) {
+					$name = "Me";
+					$side = "right";
+				}
+				// <div class="msg-img" style="background-image: url(' . $img . ')"></div>
+
+				echo '
+		<div class="msg ' . $side . '-msg">
+
+		<div class="msg-bubble">
+			<div class="msg-info">
+			<div class="msg-info-name">' . $name . '</div>
+			<div class="msg-info-time">' . $time . '</div>
 			</div>
 
-			<div class="jsjksk">
+			<div class="msg-text">' . $msg . '</div>
+		</div>
+		</div> ';
 
-			</div>
-			<div class="msg right-msg">
-				<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"></div>
+				//echo $msgHTML;
+			}
+			?>
 
-				<div class="msg-bubble">
-					<div class="msg-info">
-						<div class="msg-info-name">Sajad</div>
-						<div class="msg-info-time">12:46</div>
-					</div>
 
-					<div class="msg-text">
-						You can change your name in JS section!
-					</div>
-				</div>
-			</div>
 		</main>
 
 		<form class="msger-inputarea" method="post" action="messages.php">
 
-			<input type="hidden" id="userId" name="userId" value="<?php echo $uid; ?>">
+			<input type="hidden" id="userId" name="userId" value="<?php echo $sId; ?>">
+			<input type="hidden" id="recName" name="recName" value="<?php if (isset($_GET['recName'])) {
+																		echo $_GET['recName'];
+																	} ?>">
 			<input type="hidden" id="receiverId" name="receiverId" value="<?php if (isset($_GET['rid'])) {
 																				echo $_GET['rid'];
 																			} ?>">
@@ -217,12 +256,14 @@ include("like.php"); ?>
 			<button type="submit" class="msger-send-btn">Send</button>
 		</form>
 	</section>
+																		<?php else:?>
+																			<div>Select a contact to chat with </div>
+																			<?php endif?>
 
 
 
 
-
-	<!-- ############################################################################################################ -->
+	<!-- ########################################## JAVA SCRIPT################################################################## -->
 	<!-- ############################################################################################################ -->
 	<!-- ############################################################################################################ -->
 
@@ -230,13 +271,52 @@ include("like.php"); ?>
 		const msgerForm = get(".msger-inputarea");
 		const msgerInput = get(".msger-input");
 		const msgerChat = get(".msger-chat");
- 
+
 
 		// Icons made by Freepik from www.flaticon.com
-		const SENDER_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
+		const RECEIVER_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
 		const MY_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
-		const SENDER_NAME = "SENDER";
+		const RECEIVER_NAME = $('#recName').val();
 		const MY_NAME = "Me";
+		var msg = $('#msg').val();
+		var sId = $('#userId').val();
+		var rId = $('#receiverId').val();
+
+
+
+
+
+
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////
+
+		$(document).ready(function() {
+
+			conn = new WebSocket('ws://localhost:8080');
+			conn.onopen = function(e) {
+
+				console.log("Connection established!");
+			};
+
+			conn.onmessage = function(e) {
+				var sId = $('#userId').val();
+				var rId = $('#receiverId').val();
+				console.log(e.data);
+				data = JSON.parse(e.data);
+				const msgText = data.msg;
+
+				if (data.sId == sId) {
+
+					appendMessage(MY_NAME, MY_IMG, "right", msgText);
+				} else {
+
+					appendMessage(RECEIVER_NAME, RECEIVER_IMG, "left", msgText);
+				}
+
+
+
+			}
+		});
 
 		//onclick Send or Submit
 		msgerForm.addEventListener("submit", event => {
@@ -245,7 +325,7 @@ include("like.php"); ?>
 			const msgText = msgerInput.value;
 			if (!msgText) return;
 
-			appendMessage(MY_NAME, MY_IMG, "right", msgText);
+			// appendMessage(MY_NAME, MY_IMG, "right", msgText);
 			// msgerInput.value = "";
 
 			if ($('#msg').val() !== "" && $('#userId').val() !== "" && $('#receiverId').val() !== "") {
@@ -253,7 +333,6 @@ include("like.php"); ?>
 				var msg = $('#msg').val();
 				var sId = $('#userId').val();
 				var rId = $('#receiverId').val();
-
 
 				var data = {
 					sId: sId,
@@ -263,14 +342,16 @@ include("like.php"); ?>
 				}
 
 				conn.send(JSON.stringify(data));
+				msgerInput.value = "";
 			} else {
 				console.log("data feilds must not be empty!!");
 			}
 			if (!msg) return;
 
 			document.getElementById("msg").value = "";
-			// botResponse();
+
 		});
+
 
 		function appendMessage(name, img, side, text) {
 			//   Simple solution for small apps
@@ -292,10 +373,6 @@ include("like.php"); ?>
 			msgerChat.scrollTop += 500;
 		}
 
-		function botResponse() {
-			/**some code here */
-		}
-
 		// Utils
 		function get(selector, root = document) {
 			return root.querySelector(selector);
@@ -305,39 +382,9 @@ include("like.php"); ?>
 			const h = "0" + date.getHours();
 			const m = "0" + date.getMinutes();
 
+
 			return `${h.slice(-2)}:${m.slice(-2)}`;
 		}
-
-		function random(min, max) {
-			return Math.floor(Math.random() * (max - min) + min);
-		}
-
-		/////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////
-
-		$(document).ready(function() {
-
-			conn = new WebSocket('ws://localhost:8080');
-			conn.onopen = function(e) {
-
-				console.log("Connection established!");
-			};
-
-			conn.onmessage = function(e) {
-				console.log(e.data);
-				data = JSON.parse(e.data);
-				var sId = $('#userId').val();
-
-				const msgText = data.msg;
-				appendMessage(SENDER_NAME, SENDER_IMG, "left", msgText);
-
-			}
-		});
-
-		$("#send").click(function(e) {
-
-
-		});
 	</script>
 
 

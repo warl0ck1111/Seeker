@@ -44,7 +44,7 @@ class Chat implements MessageComponentInterface
         );
         $data = json_decode($msg, true);
         
-        $col = [$data['sId']] = $from->resourceId;
+        
          
 
 
@@ -58,7 +58,7 @@ class Chat implements MessageComponentInterface
         if ($objChat->saveMsg()) {
 
             echo "msg saved...\n";
-            
+             echo $objChat->getId()."...\n";
 
              
         } else {
@@ -66,9 +66,9 @@ class Chat implements MessageComponentInterface
         }
 
         foreach ($this->clients as $client) {
-            if ($from !== $client) {
+            $client->send($msg);
+            if ($from == $client) {
                 // The sender is not the receiver, send to each client connected
-                $client->send($msg);
             }
         }
     }

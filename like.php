@@ -106,12 +106,14 @@ function getMatches($user_id)
   //$user_id = escs($user_id);
   $matches = array();
   $matchFound = 0;
+
   for ($i = 0; $i < sizeof($likes_arr); $i++) {
     $pos = $likes_arr[$i]["user_id"];
     $query = "SELECT * from likes where user_id = '$user_id' and liked_id = '$pos'";
     $result = mysqli_query($conn, $query);
     if (!$result) {
       array_push($errors, mysqli_error($conn));
+      //echo mysqli_error($conn);
       exit();
     }
     if ($result->num_rows > 0) {

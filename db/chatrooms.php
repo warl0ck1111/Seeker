@@ -142,7 +142,7 @@ class Chatrooms
 	}
 
 	function getChats($sId, $rId){
-		$stmt = $this->dbConn->prepare("SELECT * FROM message where sender = '$sId' AND receiver ='$rId' OR receiver ='$sId' AND sender ='$rId' ") ;
+		$stmt = $this->dbConn->prepare("SELECT m.*, u.u_name,u.profile_image FROM message m JOIN users u ON (m.sender = u.user_id)  where (m.sender = '$sId' AND m.receiver ='$rId' ) OR (m.receiver ='$sId' AND m.sender ='$rId' )") ;
 		$stmt->execute();
 		$chats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $chats;

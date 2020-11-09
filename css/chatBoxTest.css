@@ -28,7 +28,7 @@
   }
   
   .msger {
-    display: flex;
+    display: inherit;
     flex-flow: column wrap;
     justify-content: space-between;
     width: 100%;
@@ -46,7 +46,7 @@
     justify-content: space-between;
     padding: 10px;
     border-bottom: var(--border);
-    background: #eee;
+    background: #919496;
     color: #666;
   }
   
@@ -84,6 +84,7 @@
   }
   .msg-bubble {
     max-width: 450px;
+    margin-right: 8px;
     padding: 15px;
     border-radius: 15px;
     background: var(--left-msg-bg);
