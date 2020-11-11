@@ -8,10 +8,6 @@ use Ratchet\ConnectionInterface;
 
 require "../db/Users.php";
 require "../db/chatrooms.php";
- 
-
-
-
 
 class Chat implements MessageComponentInterface
 {
@@ -43,9 +39,9 @@ class Chat implements MessageComponentInterface
             $numRecv == 1 ? '' : 's'
         );
         $data = json_decode($msg, true);
-        
-        
-         
+
+
+
 
 
         $objChat = new \Chatrooms();
@@ -58,9 +54,7 @@ class Chat implements MessageComponentInterface
         if ($objChat->saveMsg()) {
 
             echo "msg saved...\n";
-             echo $objChat->getId()."...\n";
-
-             
+            echo $objChat->getId() . "...\n";
         } else {
             echo "there was aproblem saving msg...\n";
         }
@@ -84,7 +78,6 @@ class Chat implements MessageComponentInterface
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         echo "An error has occurred: {$e->getMessage()}\n";
-
         $conn->close();
     }
 }

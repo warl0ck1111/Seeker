@@ -162,6 +162,7 @@
  								<!-- <td ><?php //echo $seeker['email']; ?> -->
  								</td>
  								<!-- <td><?php //echo $seeker['role']; ?></td> -->
+								 
  								<td>
  									<a class="fa fa-pencil btn edit" href="seekers.php?edit-seeker=<?php echo $seeker['user_id'] .'&name='.$seeker['u_name']?>">
  									</a>
