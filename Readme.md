@@ -1,5 +1,10 @@
 <!-- Courtship seeker Documentation-->
-<!-- For Regular User Features include -->
+<!--  -->
+
+Courtship Seeker is an Open dating Site made with Php, Html & JavaScript
+
+Regular User Features include
+
 Create Account
 View and Edit Account
 update Account
