@@ -1,7 +1,7 @@
 <!-- Courtship seeker Documentation-->
 <!--  -->
 
-Courtship Seeker is an Open dating Site made with Php, Html & JavaScript
+Courtship Seeker is an Open Source dating Site made with Php, Html & JavaScript
 
 Regular User Features include
 
